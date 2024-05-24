@@ -8,18 +8,48 @@ import com.mycompany.simulador_sensores.protocol.Protocol;
 import lombok.Data;
 
 /**
+ * Class abstract that models the behavior of sensors. This class serves as a
+ * base for defining various types of sensors.
  *
  * @author daniel
  */
 @Data
 public abstract class Sensor {
 
+    /**
+     * Series number associated with the sensor
+     */
     protected String serie;
+
+    /**
+     * Time interval (in seconds) at which the sensor sends data
+     */
     protected int timeInterval;
+
+    /**
+     * Current status of the sensor (true if active, false otherwise)
+     */
     protected boolean status;
+
+    /**
+     * Protocol used for communication by the sensor
+     */
     protected Protocol protocol;
 
+    /**
+     * Data interface used by the sensor to capture measurements
+     */
+    protected Data data;
+
+    /**
+     * Starts the sensor operation. This method is used to initialize and begin
+     * the sensor's data collection process.
+     */
     public abstract void startSensor();
 
+    /**
+     * Stops the sensor operation. This method is used to halt the sensor's data
+     * collection process and perform any necessary cleanup.
+     */
     public abstract void stopSensor();
 }

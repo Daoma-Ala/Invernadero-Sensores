@@ -5,15 +5,27 @@
 package com.mycompany.simulador_sensores.protocol;
 
 /**
+ * Interface that defines methods for using the protocol
  *
  * @author daniel
  */
 public interface Protocol {
 
+    /**
+     * Connects to the communication protocol
+     */
     public void connect();
 
+    /**
+     * Disconnects from the communication protocol
+     */
     public void disconnect();
 
-    public void publish();
+    /**
+     * Publishes a message to the protocol
+     *
+     * @param message message to be published
+     */
+    public void publish(String message);
 
 }

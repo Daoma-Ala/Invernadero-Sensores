@@ -7,11 +7,15 @@ package com.mycompany.simulador_sensores.data.impl;
 import com.mycompany.simulador_sensores.data.Data;
 
 /**
+ * Class that defines the temperature for sensors
  *
  * @author daniel
  */
 public class TemperatureData implements Data {
 
+    /**
+     * Method for sensing data
+     */
     @Override
     public void sense() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
