@@ -1,0 +1,103 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.simulador_sensores.protocol.impl;
+
+import com.mycompany.simulador_sensores.protocol.Protocol;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import lombok.Builder;
+import lombok.Data;
+import org.eclipse.californium.core.CoapClient;
+import org.eclipse.californium.core.CoapResponse;
+
+/**
+ * Class that implements the logic for sending messages asynchronously using the
+ * Coap protocol
+ *
+ * @author daniel
+ */
+@Data
+@Builder
+public class CoapProtocol implements Protocol {
+
+    /**
+     * Logger for logging messages and errors
+     */
+    private static final Logger LOGGER = Logger.getLogger(CoapProtocol.class.getName());
+
+    /**
+     * CoAP client for handling connection and communication
+     */
+    private transient CoapClient client;
+
+    /**
+     * URI of the CoAP server to connect to
+     */
+    private final String coapServerUri;
+
+    /**
+     * Connects to the Coap communication protocol
+     */
+    @Override
+    public void connect() {
+        // CoAP clients do not need an explicit connection step
+    }
+
+    /**
+     * Disconnects from the Coap communication protocol
+     */
+    @Override
+    public void disconnect() {
+        if (client != null) {
+            client.shutdown();
+            LOGGER.info("Disconnected from the CoAP server");
+        }
+    }
+
+    /**
+     * Publishes a message to the CoAP server.
+     *
+     * @param message the message to be published. Must not be null or empty.
+     * @throws IllegalArgumentException if the message is null or empty.
+     * @throws CoapPublishException if an error occurs during the publication.
+     */
+    @Override
+    public void publish(String message) {
+        if (message == null || message.isEmpty()) {
+            throw new IllegalArgumentException("Message cannot be null or empty");
+        }
+
+        if (client == null) {
+            client = new CoapClient(coapServerUri);
+        }
+
+        try {
+            CoapResponse response = client.post(message, 0);
+            handleResponse(response);
+        } catch (Exception e) {
+            Thread.currentThread().interrupt();
+            LOGGER.log(Level.SEVERE, "Error during the publication of data to CoAP", e);
+            throw new RuntimeException("Error during the publication of data to CoAP", e);
+        } finally {
+            client.shutdown(); // Asegúrate de liberar recursos
+        }
+    }
+
+    /**
+     * Handles the response from the CoAP server.
+     *
+     * @param response the CoAP response.
+     * @throws CoapPublishException if the response indicates a failure.
+     */
+    private void handleResponse(CoapResponse response) {
+        if (response != null && response.isSuccess()) {
+            LOGGER.info("Successfully sent data to the CoAP server");
+        } else {
+            String errorMsg = "Error sending data to the CoAP server: " + (response != null ? response.getResponseText() : "no response");
+            throw new RuntimeException(errorMsg);
+        }
+    }
+
+}
