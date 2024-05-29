@@ -4,7 +4,11 @@
  */
 package com.mycompany.simulador_sensores.sensor;
 
+import com.mycompany.simulador_sensores.data.DataSen;
 import com.mycompany.simulador_sensores.protocol.Protocol;
+import com.mycompany.simulador_sensores.protocol.impl.CoapProtocol;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.logging.Logger;
 import lombok.Data;
 
 /**
@@ -39,17 +43,25 @@ public abstract class Sensor {
     /**
      * Data interface used by the sensor to capture measurements
      */
-    protected Data data;
+    protected DataSen data;
+
+    protected transient ScheduledExecutorService scheduler;
+    protected static final Logger LOGGER = Logger.getLogger(Sensor.class.getName());
 
     /**
      * Starts the sensor operation. This method is used to initialize and begin
      * the sensor's data collection process.
      */
-    public abstract void startSensor();
+    protected abstract void startSensor();
 
     /**
      * Stops the sensor operation. This method is used to halt the sensor's data
      * collection process and perform any necessary cleanup.
      */
-    public abstract void stopSensor();
+    protected abstract void stopSensor();
+
+    protected void takeData() {
+        this.data.sense();
+    }
+
 }
