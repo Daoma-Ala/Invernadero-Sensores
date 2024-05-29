@@ -4,21 +4,30 @@
  */
 package com.mycompany.simulador_sensores.data.impl;
 
-import com.mycompany.simulador_sensores.data.Data;
+import com.mycompany.simulador_sensores.data.DataSen;
+import lombok.Builder;
+import lombok.Data;
 
 /**
  * Class that defines the humidity for sensors
  *
  * @author daniel
  */
-public class HumidityData implements Data {
+@Data
+@Builder
+public class HumidityData implements DataSen {
+
+    private float value;
+    private HumidityData humidityData;
 
     /**
      * Method for sensing data
      */
     @Override
     public void sense() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int min = 30;
+        int max = 90;
+        this.value = (float) (min + Math.random() * (max - min));
     }
 
 }

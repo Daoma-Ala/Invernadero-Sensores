@@ -9,7 +9,7 @@ package com.mycompany.simulador_sensores.data;
  *
  * @author daniel
  */
-public interface Data {
+public interface DataSen {
 
     /**
      * Method for perform a sensing operation

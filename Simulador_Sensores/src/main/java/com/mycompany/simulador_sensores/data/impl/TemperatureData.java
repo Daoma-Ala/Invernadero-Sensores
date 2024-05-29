@@ -4,21 +4,30 @@
  */
 package com.mycompany.simulador_sensores.data.impl;
 
-import com.mycompany.simulador_sensores.data.Data;
+import com.mycompany.simulador_sensores.data.DataSen;
+import lombok.Builder;
+import lombok.Data;
 
 /**
  * Class that defines the temperature for sensors
  *
  * @author daniel
  */
-public class TemperatureData implements Data {
+@Data
+@Builder
+public class TemperatureData implements DataSen {
+
+    private float value;
+    private TemperatureData temperatureData;
 
     /**
      * Method for sensing data
      */
     @Override
     public void sense() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int min = 10;
+        int max = 30;
+        this.value = (float) (min + Math.random() * (max - min));
     }
 
 }
