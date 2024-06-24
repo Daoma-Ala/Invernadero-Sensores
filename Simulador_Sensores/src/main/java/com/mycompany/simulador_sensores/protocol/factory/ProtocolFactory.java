@@ -1,0 +1,31 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.simulador_sensores.protocol.factory;
+
+import com.mycompany.simulador_sensores.protocol.Protocol;
+import com.mycompany.simulador_sensores.protocol.impl.CoapProtocol;
+import com.mycompany.simulador_sensores.protocol.impl.MqttProtocol;
+
+/**
+ *
+ * @author daniel
+ */
+public class ProtocolFactory {
+
+    public static Protocol createProtocol(String type, String serie, String gateway) {
+        switch (type) {
+            case "MQTT":
+                String broker = "tcp://broker.emqx.io:1883";
+                String topic = "sensor/" + gateway;
+                return (Protocol) MqttProtocol.builder().broker(broker).
+                        clientId(serie).topic(topic);
+            case "COAP":
+                String coapServerUri = "coap://localhost:5683/" + gateway;
+                return (Protocol) CoapProtocol.builder().coapServerUri(coapServerUri);
+            default:
+                throw new IllegalArgumentException("Tipo de protocolo no soportado: " + type);
+        }
+    }
+}

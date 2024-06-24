@@ -6,10 +6,10 @@ package com.mycompany.simulador_sensores.sensor;
 
 import com.mycompany.simulador_sensores.data.DataSen;
 import com.mycompany.simulador_sensores.protocol.Protocol;
-import com.mycompany.simulador_sensores.protocol.impl.CoapProtocol;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Logger;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Class abstract that models the behavior of sensors. This class serves as a
@@ -18,6 +18,7 @@ import lombok.Data;
  * @author daniel
  */
 @Data
+@SuperBuilder
 public abstract class Sensor {
 
     /**
@@ -52,13 +53,13 @@ public abstract class Sensor {
      * Starts the sensor operation. This method is used to initialize and begin
      * the sensor's data collection process.
      */
-    protected abstract void startSensor();
+    public abstract void startSensor();
 
     /**
      * Stops the sensor operation. This method is used to halt the sensor's data
      * collection process and perform any necessary cleanup.
      */
-    protected abstract void stopSensor();
+    public abstract void stopSensor();
 
     protected void takeData() {
         this.data.sense();

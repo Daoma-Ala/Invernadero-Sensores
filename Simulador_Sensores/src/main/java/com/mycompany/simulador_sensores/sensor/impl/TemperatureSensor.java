@@ -9,7 +9,7 @@ import com.mycompany.simulador_sensores.utils.MapperToJson;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-import lombok.Builder;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Class representing a temperature sensor. This class implements the behavior
@@ -17,7 +17,7 @@ import lombok.Builder;
  *
  * @author daniel
  */
-@Builder
+@SuperBuilder
 public class TemperatureSensor extends Sensor {
 
     /**

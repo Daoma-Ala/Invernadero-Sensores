@@ -5,6 +5,7 @@
 package com.mycompany.simulador_sensores.data.impl;
 
 import com.mycompany.simulador_sensores.data.DataSen;
+import com.mycompany.simulador_sensores.data.impl.unit.HumidityUnit;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,7 +19,7 @@ import lombok.Data;
 public class HumidityData implements DataSen {
 
     private float value;
-    private HumidityData humidityData;
+    private HumidityUnit humidityUnit;
 
     /**
      * Method for sensing data

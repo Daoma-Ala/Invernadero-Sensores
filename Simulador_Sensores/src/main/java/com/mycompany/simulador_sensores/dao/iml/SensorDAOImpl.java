@@ -25,8 +25,16 @@ public class SensorDAOImpl implements SensorDAO {
     private final String folderPath = "sensors";
     private final ObjectMapper mapper = new ObjectMapper();
     private final String typeDocument = ".json";
+    private static SensorDAOImpl sensorDAOImpl;
 
-    public SensorDAOImpl() {
+    private SensorDAOImpl() {
+    }
+
+    public static synchronized SensorDAOImpl getInstance() {
+        if (sensorDAOImpl == null) {
+            sensorDAOImpl = new SensorDAOImpl();
+        }
+        return sensorDAOImpl;
     }
 
     @Override
