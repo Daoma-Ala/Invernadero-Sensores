@@ -20,10 +20,10 @@ public class ProtocolFactory {
                 String broker = "tcp://broker.emqx.io:1883";
                 String topic = "sensor/" + gateway;
                 return (Protocol) MqttProtocol.builder().broker(broker).
-                        clientId(serie).topic(topic);
+                        clientId(serie).topic(topic).build();
             case "COAP":
                 String coapServerUri = "coap://localhost:5683/" + gateway;
-                return (Protocol) CoapProtocol.builder().coapServerUri(coapServerUri);
+                return (Protocol) CoapProtocol.builder().coapServerUri(coapServerUri).build();
             default:
                 throw new IllegalArgumentException("Tipo de protocolo no soportado: " + type);
         }

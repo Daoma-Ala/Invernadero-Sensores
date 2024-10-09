@@ -4,6 +4,21 @@
  */
 package com.mycompany.simulador_sensores.data;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.mycompany.simulador_sensores.data.impl.HumidityData;
+import com.mycompany.simulador_sensores.data.impl.TemperatureData;
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = HumidityData.class, name = "humidity"),
+    @JsonSubTypes.Type(value = TemperatureData.class, name = "temperature")
+})
+
 /**
  * Interface that defines the methods for taking measurements
  *

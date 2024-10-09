@@ -6,7 +6,6 @@ package com.mycompany.simulador_sensores.dao.iml;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.simulador_sensores.dao.SensorDAO;
-import com.mycompany.simulador_sensores.protocol.impl.CoapProtocol;
 import com.mycompany.simulador_sensores.sensor.Sensor;
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class SensorDAOImpl implements SensorDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(CoapProtocol.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SensorDAOImpl.class.getName());
     private final String folderPath = "sensors";
     private final ObjectMapper mapper = new ObjectMapper();
     private final String typeDocument = ".json";

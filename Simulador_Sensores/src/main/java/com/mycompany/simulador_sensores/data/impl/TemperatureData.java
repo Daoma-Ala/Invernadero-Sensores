@@ -6,8 +6,10 @@ package com.mycompany.simulador_sensores.data.impl;
 
 import com.mycompany.simulador_sensores.data.DataSen;
 import com.mycompany.simulador_sensores.data.impl.unit.TemperatureUnit;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Class that defines the temperature for sensors
@@ -16,6 +18,8 @@ import lombok.Data;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TemperatureData implements DataSen {
 
     private float value;

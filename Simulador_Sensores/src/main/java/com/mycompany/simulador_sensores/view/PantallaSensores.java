@@ -13,13 +13,10 @@ import com.mycompany.simulador_sensores.protocol.Protocol;
 import com.mycompany.simulador_sensores.protocol.impl.CoapProtocol;
 import com.mycompany.simulador_sensores.protocol.impl.MqttProtocol;
 import com.mycompany.simulador_sensores.sensor.Sensor;
-import com.mycompany.simulador_sensores.sensor.impl.HumiditySensor;
-import com.mycompany.simulador_sensores.sensor.impl.TemperatureSensor;
 import java.awt.Color;
-import java.awt.Font;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,19 +32,9 @@ public class PantallaSensores extends javax.swing.JFrame {
 
     public PantallaSensores() {
         initComponents();
-        cargarTabla();
         cargarDatosTabla();
         validarTitulo();
         registroSensorView = new RegistroSensorView(this);
-    }
-
-    private void cargarTabla() {
-        setBackground(new Color(0, 0, 0, 0));
-        tblSensores.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
-        tblSensores.getTableHeader().setOpaque(false);
-        tblSensores.getTableHeader().setBackground(new Color(255, 102, 102));
-        tblSensores.getTableHeader().setForeground(new Color(255, 255, 255));
-        tblSensores.setRowHeight(25);
     }
 
     protected void cargarDatosTabla() {
@@ -69,35 +56,36 @@ public class PantallaSensores extends javax.swing.JFrame {
 
     private Object[] crearObjetoTabla(Sensor sensor) {
         String serie = sensor.getSerie();
-        String tipoSensor = validarTipoSensor(sensor);
+
         boolean estatus = sensor.isStatus();
-        String tipoMedicion = validarTipoMedicion(sensor.getData());
+        List<String> mediciones = validarTipoMedicion(sensor.getData());
         String protocolo = validarProtocolo(sensor.getProtocol());
         int tiempoCaptura = sensor.getTimeInterval();
-        return new Object[]{serie, tipoSensor, estatus,
-            tipoMedicion, protocolo,
-            tiempoCaptura};
+
+        if (mediciones.size() == 2) {
+            return new Object[]{serie, estatus,
+                protocolo, mediciones.get(0), mediciones.get(1),
+                tiempoCaptura};
+        } else {
+            return new Object[]{serie, estatus,
+                protocolo, mediciones.get(0), "",
+                tiempoCaptura};
+        }
+
     }
 
-    private String validarTipoSensor(Sensor sensor) {
-        if (sensor instanceof HumiditySensor) {
-            return "Sensor de humedad";
-        } else if (sensor instanceof TemperatureSensor) {
-            return "Sensor de temperatura";
+    private List<String> validarTipoMedicion(List<DataSen> data) {
+        List<String> mediciones = new ArrayList<>();
+        for (DataSen dataImp : data) {
+            if (dataImp instanceof HumidityData) {
+                mediciones.add("Humedad "
+                        + ((HumidityData) dataImp).getHumidityUnit().toString());
+            } else if (dataImp instanceof TemperatureData) {
+                mediciones.add("Temperatura "
+                        + ((TemperatureData) dataImp).getTemperatureUnit().toString());
+            }
         }
-        return null;
-    }
-
-    private String validarTipoMedicion(DataSen data) {
-        if (data instanceof HumidityData) {
-            return "Humedad "
-                    + ((HumidityData) data).getHumidityUnit().toString();
-        } else if (data instanceof TemperatureData) {
-            return "Temperatura "
-                    + ((TemperatureData) data).getTemperatureUnit().toString();
-
-        }
-        return null;
+        return mediciones;
     }
 
     private String validarProtocolo(Protocol protocol) {
@@ -140,9 +128,10 @@ public class PantallaSensores extends javax.swing.JFrame {
         setType(java.awt.Window.Type.POPUP);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(221, 208, 200));
 
-        tab1.setBackground(new java.awt.Color(255, 153, 153));
+        tab1.setBackground(new java.awt.Color(50, 50, 50));
+        tab1.setForeground(new java.awt.Color(60, 63, 65));
 
         btnIniciarSensores.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnIniciarSensores.setForeground(new java.awt.Color(255, 255, 255));
@@ -171,14 +160,15 @@ public class PantallaSensores extends javax.swing.JFrame {
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sensor.png"))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setText("Sensores");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setText("Simulador ");
 
-        jPanel3.setBackground(new java.awt.Color(255, 153, 153));
+        jPanel3.setBackground(new java.awt.Color(50, 50, 50));
+        jPanel3.setForeground(new java.awt.Color(60, 63, 65));
 
         btnRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -268,7 +258,7 @@ public class PantallaSensores extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Serie", "Tipo de sensor", "Estatus", "Tipo de Medición", "Protocolo", "Intervalo de Captura"
+                "Serie", "Estatus", "Protocolo", "Tipo de Medición", "", "Intervalo de Captura"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -281,12 +271,20 @@ public class PantallaSensores extends javax.swing.JFrame {
         });
         tblSensores.setFocusable(false);
         tblSensores.setRowHeight(25);
-        tblSensores.setSelectionBackground(new java.awt.Color(255, 153, 153));
+        tblSensores.setSelectionBackground(new java.awt.Color(221, 208, 200));
         tblSensores.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tblSensores.setShowGrid(false);
         tblSensores.getTableHeader().setResizingAllowed(false);
         tblSensores.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblSensores);
+        if (tblSensores.getColumnModel().getColumnCount() > 0) {
+            tblSensores.getColumnModel().getColumn(0).setResizable(false);
+            tblSensores.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tblSensores.getColumnModel().getColumn(1).setResizable(false);
+            tblSensores.getColumnModel().getColumn(1).setPreferredWidth(5);
+            tblSensores.getColumnModel().getColumn(5).setResizable(false);
+            tblSensores.getColumnModel().getColumn(5).setPreferredWidth(10);
+        }
 
         txtTitulo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtTitulo.setForeground(new java.awt.Color(0, 0, 0));
@@ -322,9 +320,9 @@ public class PantallaSensores extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnCerrar, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtTitulo, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 790, 600));
@@ -340,7 +338,7 @@ public class PantallaSensores extends javax.swing.JFrame {
 
     private void btnComprimirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprimirMouseClicked
         // TODO add your handling code here:
-        this.setExtendedState(ICONIFIED);
+        this.setExtendedState(JFrame.ICONIFIED);
     }//GEN-LAST:event_btnComprimirMouseClicked
 
     private void btnIniciarSensoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSensoresMouseClicked
@@ -371,6 +369,7 @@ public class PantallaSensores extends javax.swing.JFrame {
     }
     private void btnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseClicked
         // TODO add your handling code here:
+        this.setVisible(false);
         registroSensorView.setVisible(true);
     }//GEN-LAST:event_btnRegistrarMouseClicked
 

@@ -4,11 +4,14 @@
  */
 package com.mycompany.simulador_sensores.protocol.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mycompany.simulador_sensores.protocol.Protocol;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapResponse;
 
@@ -20,6 +23,8 @@ import org.eclipse.californium.core.CoapResponse;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CoapProtocol implements Protocol {
 
     /**
@@ -30,12 +35,13 @@ public class CoapProtocol implements Protocol {
     /**
      * CoAP client for handling connection and communication
      */
+    @JsonIgnore
     private transient CoapClient client;
 
     /**
      * URI of the CoAP server to connect to
      */
-    private final String coapServerUri;
+    private String coapServerUri;
 
     /**
      * Connects to the Coap communication protocol

@@ -14,8 +14,9 @@ import com.mycompany.simulador_sensores.data.impl.unit.TemperatureUnit;
 import com.mycompany.simulador_sensores.protocol.Protocol;
 import com.mycompany.simulador_sensores.protocol.factory.ProtocolFactory;
 import com.mycompany.simulador_sensores.sensor.Sensor;
-import com.mycompany.simulador_sensores.sensor.impl.HumiditySensor;
-import com.mycompany.simulador_sensores.sensor.impl.TemperatureSensor;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -25,7 +26,7 @@ import javax.swing.DefaultComboBoxModel;
 public class RegistroSensorView extends javax.swing.JFrame {
 
     private PantallaSensores pantallaSensores;
-    private String tipoSensor;
+    // private String tipoSensor;
     private final SensorDAO sensorDAO = SensorDAOImpl.getInstance();
 
     /**
@@ -103,13 +104,13 @@ public class RegistroSensorView extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(221, 208, 200));
         jPanel1.setMinimumSize(new java.awt.Dimension(330, 650));
         jPanel1.setPreferredSize(new java.awt.Dimension(330, 650));
 
-        txtSerie.setBackground(new java.awt.Color(255, 102, 102));
+        txtSerie.setBackground(new java.awt.Color(221, 208, 200));
         txtSerie.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtSerie.setForeground(new java.awt.Color(255, 255, 255));
+        txtSerie.setForeground(new java.awt.Color(50, 50, 50));
         txtSerie.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtSerie.setText("(Ingrese la serie)");
         txtSerie.setToolTipText("");
@@ -122,22 +123,12 @@ public class RegistroSensorView extends javax.swing.JFrame {
                 txtSerieFocusLost(evt);
             }
         });
-        txtSerie.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtSerieMouseClicked(evt);
-            }
-        });
-        txtSerie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSerieActionPerformed(evt);
-            }
-        });
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(50, 50, 50));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(50, 50, 50));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -148,12 +139,12 @@ public class RegistroSensorView extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 348, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        btnHumedad.setBackground(new java.awt.Color(255, 102, 102));
+        btnHumedad.setBackground(new java.awt.Color(221, 208, 200));
         btnHumedad.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnHumedad.setForeground(new java.awt.Color(255, 255, 255));
+        btnHumedad.setForeground(new java.awt.Color(50, 50, 50));
         btnHumedad.setText("Humedad");
         btnHumedad.setBorder(null);
         btnHumedad.addItemListener(new java.awt.event.ItemListener() {
@@ -163,26 +154,31 @@ public class RegistroSensorView extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(50, 50, 50));
         jLabel2.setText("Segundos");
 
-        btnTemperatura.setBackground(new java.awt.Color(255, 102, 102));
+        btnTemperatura.setBackground(new java.awt.Color(221, 208, 200));
         btnTemperatura.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnTemperatura.setForeground(new java.awt.Color(255, 255, 255));
+        btnTemperatura.setForeground(new java.awt.Color(50, 50, 50));
         btnTemperatura.setText("Temperatura");
         btnTemperatura.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 btnTemperaturaItemStateChanged(evt);
             }
         });
+        btnTemperatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTemperaturaActionPerformed(evt);
+            }
+        });
 
-        cbxHumedad.setBackground(new java.awt.Color(255, 102, 102));
-        cbxHumedad.setForeground(new java.awt.Color(255, 255, 255));
+        cbxHumedad.setBackground(new java.awt.Color(221, 208, 200));
+        cbxHumedad.setForeground(new java.awt.Color(50, 50, 50));
         cbxHumedad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         cbxHumedad.setEnabled(false);
 
-        cbxTemperatura.setBackground(new java.awt.Color(255, 102, 102));
-        cbxTemperatura.setForeground(new java.awt.Color(255, 255, 255));
+        cbxTemperatura.setBackground(new java.awt.Color(221, 208, 200));
+        cbxTemperatura.setForeground(new java.awt.Color(50, 50, 50));
         cbxTemperatura.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         cbxTemperatura.setEnabled(false);
 
@@ -191,24 +187,24 @@ public class RegistroSensorView extends javax.swing.JFrame {
         tiempoSpinner.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(50, 50, 50));
         jLabel4.setText("Muestra");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setForeground(new java.awt.Color(50, 50, 50));
         jLabel5.setText("Protocolo");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setForeground(new java.awt.Color(50, 50, 50));
         jLabel6.setText("Intervalo Tiempo");
 
-        cbxProtocolo.setBackground(new java.awt.Color(255, 102, 102));
-        cbxProtocolo.setForeground(new java.awt.Color(255, 255, 255));
+        cbxProtocolo.setBackground(new java.awt.Color(221, 208, 200));
+        cbxProtocolo.setForeground(new java.awt.Color(50, 50, 50));
         cbxProtocolo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MQTT", "COAP" }));
 
-        txtGateway.setBackground(new java.awt.Color(255, 102, 102));
+        txtGateway.setBackground(new java.awt.Color(221, 208, 200));
         txtGateway.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtGateway.setForeground(new java.awt.Color(255, 255, 255));
+        txtGateway.setForeground(new java.awt.Color(50, 50, 50));
         txtGateway.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtGateway.setText("(Ingrese la identificador del gateway)");
         txtGateway.setBorder(null);
@@ -220,19 +216,15 @@ public class RegistroSensorView extends javax.swing.JFrame {
                 txtGatewayFocusLost(evt);
             }
         });
-        txtGateway.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtGatewayActionPerformed(evt);
-            }
-        });
 
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setForeground(new java.awt.Color(50, 50, 50));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
 
-        jPanel3.setBackground(new java.awt.Color(94, 33, 41));
+        jPanel3.setBackground(new java.awt.Color(50, 50, 50));
         jPanel3.setForeground(new java.awt.Color(60, 63, 65));
 
+        btnGuardar.setBackground(new java.awt.Color(102, 255, 102));
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -266,40 +258,7 @@ public class RegistroSensorView extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(tiempoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSalir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8))
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(txtGateway, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -326,6 +285,39 @@ public class RegistroSensorView extends javax.swing.JFrame {
                         .addGap(104, 104, 104)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(tiempoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel2))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(txtGateway, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(112, 112, 112)
+                                .addComponent(jLabel4)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnSalir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel8))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,11 +334,11 @@ public class RegistroSensorView extends javax.swing.JFrame {
                 .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnHumedad)
                             .addComponent(cbxHumedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -368,17 +360,16 @@ public class RegistroSensorView extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(cbxProtocolo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addComponent(txtGateway, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)
-                        .addGap(37, 37, 37)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addComponent(txtGateway, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(44, 44, 44)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addGap(37, 37, 37)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -396,14 +387,8 @@ public class RegistroSensorView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtSerieMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSerieMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtSerieMouseClicked
-
     private void txtSerieFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSerieFocusGained
         // TODO add your handling code here:
-
         if (this.txtSerie.getText().equals("(Ingrese la serie)")) {
             txtSerie.setText("");
         }
@@ -420,7 +405,6 @@ public class RegistroSensorView extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             this.cbxHumedad.setEnabled(true);
-            tipoSensor = "humedad";
         } else if (evt.getStateChange() == java.awt.event.ItemEvent.DESELECTED) {
             this.cbxHumedad.setEnabled(false);
         }
@@ -430,24 +414,81 @@ public class RegistroSensorView extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             this.cbxTemperatura.setEnabled(true);
-            tipoSensor = "temperatura";
         } else if (evt.getStateChange() == java.awt.event.ItemEvent.DESELECTED) {
             this.cbxTemperatura.setEnabled(false);
         }
     }//GEN-LAST:event_btnTemperaturaItemStateChanged
 
-    private void txtSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSerieActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSerieActionPerformed
-
     private void txtGatewayFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtGatewayFocusGained
         // TODO add your handling code here:
-
         if (this.txtGateway.getText().equals("(Ingrese la identificador del gateway)")) {
             txtGateway.setText("");
-
         }
     }//GEN-LAST:event_txtGatewayFocusGained
+
+    private void txtGatewayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtGatewayFocusLost
+        // TODO add your handling code here:
+        if (this.txtGateway.getText().equals("")) {
+            txtGateway.setText("(Ingrese la identificador del gateway)");
+        }
+    }//GEN-LAST:event_txtGatewayFocusLost
+
+    private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
+        // TODO add your handling code here:
+        vaciarFormulario();
+        this.setVisible(false);
+        pantallaSensores.setVisible(true);
+    }//GEN-LAST:event_btnSalirMouseClicked
+
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+        // TODO add your handling code here:
+        sensorDAO.addSensor(capturarSensor());
+        pantallaSensores.cargarDatosTabla();
+        vaciarFormulario();
+        this.setVisible(false);
+        pantallaSensores.setVisible(true);
+    }//GEN-LAST:event_btnGuardarMouseClicked
+
+    private void btnTemperaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTemperaturaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTemperaturaActionPerformed
+    // metodos importantes
+
+    private Sensor capturarSensor() {
+        // 1
+        String serie = this.txtSerie.getText();
+        // 2 muestra
+        List<DataSen> datasSen = validarMuestra();
+        // 3 Intervalo
+        int intervaloTiempo = (int) this.tiempoSpinner.getValue();
+        // 4 Protocolo
+        String protocoloCbx = (String) this.cbxProtocolo.getSelectedItem();
+
+        // 5 Gateway
+        String gateway = this.txtGateway.getText();
+        // Se crea la instancia protocolo
+
+        Protocol protocol = ProtocolFactory.createProtocol(protocoloCbx,
+                serie, gateway);
+
+        Sensor sensor = Sensor.builder().serie(serie).timeInterval(intervaloTiempo).
+                protocol(protocol).data(datasSen).build();
+
+        return sensor;
+    }
+
+    private List<DataSen> validarMuestra() {
+        List<DataSen> datas = new ArrayList<>();
+        if (this.btnHumedad.isSelected()) {
+            HumidityUnit humidityUnit = (HumidityUnit) this.cbxHumedad.getSelectedItem();
+            datas.add((DataSen) HumidityData.builder().humidityUnit(humidityUnit).build());
+        }
+        if (this.btnTemperatura.isSelected()) {
+            TemperatureUnit temperatureUnit = (TemperatureUnit) this.cbxTemperatura.getSelectedItem();
+            datas.add((DataSen) TemperatureData.builder().temperatureUnit(temperatureUnit).build());
+        }
+        return datas;
+    }
 
     private void vaciarFormulario() {
         this.txtSerie.setText("(Ingrese la serie)");
@@ -460,66 +501,6 @@ public class RegistroSensorView extends javax.swing.JFrame {
         this.tiempoSpinner.setValue(1);
         this.cbxProtocolo.setSelectedIndex(-1);
         this.txtGateway.setText("(Ingrese la identificador del gateway)");
-    }
-    private void txtGatewayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtGatewayFocusLost
-        // TODO add your handling code here:
-
-        if (this.txtGateway.getText().equals("")) {
-            txtGateway.setText("(Ingrese la identificador del gateway)");
-
-        }
-    }//GEN-LAST:event_txtGatewayFocusLost
-
-    private void txtGatewayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGatewayActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtGatewayActionPerformed
-
-    private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        // TODO add your handling code here:
-
-        vaciarFormulario();
-        dispose();
-    }//GEN-LAST:event_btnSalirMouseClicked
-
-    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        // TODO add your handling code here:
-        Sensor sensor = capturarSensor();
-        sensorDAO.addSensor(sensor);
-        pantallaSensores.cargarDatosTabla();
-        vaciarFormulario();
-    }//GEN-LAST:event_btnGuardarMouseClicked
-
-    private Sensor capturarSensor() {
-
-        Sensor sensor = validarDataSen();
-
-        String serie = this.txtSerie.getText();
-        int intervaloTiempo = (int) this.tiempoSpinner.getValue();
-        String gateway = this.txtGateway.getText();
-        String protocoloCbx = (String) this.cbxProtocolo.getSelectedItem();
-        Protocol protocol = ProtocolFactory.createProtocol(protocoloCbx,
-                serie, gateway);
-
-        sensor.setSerie(serie);
-        sensor.setTimeInterval(intervaloTiempo);
-        sensor.setStatus(false);
-        sensor.setProtocol(protocol);
-
-        return sensor;
-    }
-
-    private Sensor validarDataSen() {
-        DataSen dataSen;
-        if (this.btnHumedad.isSelected()) {
-            HumidityUnit humidityUnit = (HumidityUnit) this.cbxHumedad.getSelectedItem();
-            dataSen = (DataSen) HumidityData.builder().humidityUnit(humidityUnit);
-            return HumiditySensor.builder().data(dataSen).build();
-        } else if (this.btnTemperatura.isSelected()) {
-            TemperatureUnit temperatureUnit = (TemperatureUnit) this.cbxTemperatura.getSelectedItem();
-            dataSen = (DataSen) TemperatureData.builder().temperatureUnit(temperatureUnit);
-            return TemperatureSensor.builder().data(dataSen).build();
-        }
-        return null;
     }
 
 

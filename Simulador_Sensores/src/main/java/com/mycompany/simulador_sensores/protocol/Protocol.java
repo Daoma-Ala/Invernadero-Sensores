@@ -4,6 +4,20 @@
  */
 package com.mycompany.simulador_sensores.protocol;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.mycompany.simulador_sensores.protocol.impl.CoapProtocol;
+import com.mycompany.simulador_sensores.protocol.impl.MqttProtocol;
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = CoapProtocol.class, name = "coap"),
+    @JsonSubTypes.Type(value = MqttProtocol.class, name = "mqtt")
+})
 /**
  * Interface that defines methods for using the protocol
  *

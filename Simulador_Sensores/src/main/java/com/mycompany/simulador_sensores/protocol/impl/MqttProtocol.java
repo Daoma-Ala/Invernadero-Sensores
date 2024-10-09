@@ -7,9 +7,10 @@ package com.mycompany.simulador_sensores.protocol.impl;
 import com.mycompany.simulador_sensores.protocol.Protocol;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -24,6 +25,8 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MqttProtocol implements Protocol {
 
     private static final Logger LOGGER = Logger.getLogger(MqttProtocol.class.getName());
@@ -36,17 +39,17 @@ public class MqttProtocol implements Protocol {
     /**
      * URL of the MQTT broker to connect to
      */
-    private final String broker;
+    private String broker;
 
     /**
      * Client ID to use when connecting to the MQTT broker
      */
-    private final String clientId;
+    private String clientId;
 
     /**
      * Topic to which messages will be published
      */
-    private final String topic;
+    private String topic;
 
     /**
      * Connects to the Mqtt communication protocol
