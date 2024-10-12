@@ -4,13 +4,13 @@
  */
 package com.mycompany.simulador_sensores.view;
 
-import com.mycompany.simulador_sensores.dao.SensorDAO;
-import com.mycompany.simulador_sensores.dao.iml.SensorDAOImpl;
 import com.mycompany.simulador_sensores.data.DataSen;
 import com.mycompany.simulador_sensores.data.impl.HumidityData;
 import com.mycompany.simulador_sensores.data.impl.TemperatureData;
 import com.mycompany.simulador_sensores.data.impl.unit.HumidityUnit;
 import com.mycompany.simulador_sensores.data.impl.unit.TemperatureUnit;
+import com.mycompany.simulador_sensores.facade.SensorFacade;
+import com.mycompany.simulador_sensores.facade.impl.SensorFacadeImpl;
 import com.mycompany.simulador_sensores.protocol.Protocol;
 import com.mycompany.simulador_sensores.protocol.factory.ProtocolFactory;
 import com.mycompany.simulador_sensores.sensor.Sensor;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,7 +28,7 @@ public class RegistroSensorView extends javax.swing.JFrame {
 
     private PantallaSensores pantallaSensores;
     // private String tipoSensor;
-    private final SensorDAO sensorDAO = SensorDAOImpl.getInstance();
+    private final SensorFacade sensorFacade = new SensorFacadeImpl();
 
     /**
      * Creates new form RegistroSensorView
@@ -214,6 +215,11 @@ public class RegistroSensorView extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtGatewayFocusLost(evt);
+            }
+        });
+        txtGateway.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtGatewayActionPerformed(evt);
             }
         });
 
@@ -441,20 +447,31 @@ public class RegistroSensorView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        // TODO add your handling code here:
-        sensorDAO.addSensor(capturarSensor());
-        pantallaSensores.cargarDatosTabla();
-        vaciarFormulario();
-        this.setVisible(false);
-        pantallaSensores.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            sensorFacade.addSensor(capturarSensor());
+            pantallaSensores.cargarDatosTabla();
+            vaciarFormulario();
+            this.setVisible(false);
+            pantallaSensores.setVisible(true);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error al guardar el sensor", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnTemperaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTemperaturaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTemperaturaActionPerformed
+
+    private void txtGatewayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGatewayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtGatewayActionPerformed
     // metodos importantes
 
     private Sensor capturarSensor() {
+        validateSensor();
         // 1
         String serie = this.txtSerie.getText();
         // 2 muestra
@@ -475,6 +492,32 @@ public class RegistroSensorView extends javax.swing.JFrame {
                 protocol(protocol).data(datasSen).build();
 
         return sensor;
+    }
+
+    private void validateSensor() {
+
+        String serie = this.txtSerie.getText();
+        List<DataSen> datasSen = validarMuestra();
+        int intervaloTiempo = (int) this.tiempoSpinner.getValue();
+        String protocoloCbx = (String) this.cbxProtocolo.getSelectedItem();
+        String gateway = this.txtGateway.getText();
+
+        if (serie == null || serie.isEmpty() || serie.equals("(Ingrese la serie)")) {
+            throw new IllegalArgumentException("El campo 'serie' no puede estar vacío o nulo.");
+        }
+        if (intervaloTiempo <= 0) {
+            throw new IllegalArgumentException("El intervalo de tiempo debe ser mayor que 0.");
+        }
+        if (protocoloCbx == null || serie.isEmpty()) {
+            throw new IllegalArgumentException("El protocolo no puede ser nulo.");
+        }
+        if (datasSen == null || datasSen.isEmpty()) {
+            throw new IllegalArgumentException("Las muestras del sensor no pueden ser nulos o vacíos.");
+        }
+        if (gateway == null || gateway.isEmpty() || gateway.equals("(Ingrese la identificador del gateway)")) {
+            throw new IllegalArgumentException("El campo 'identificador del gateway' no puede estar vacío o nulo.");
+        }
+
     }
 
     private List<DataSen> validarMuestra() {

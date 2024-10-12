@@ -1,0 +1,1 @@
+{"serie":"asds","timeInterval":1,"status":false,"protocol":{"type":"mqtt","client":null,"broker":"tcp://broker.emqx.io:1883","clientId":"asds","topic":"sensor/1"},"data":[{"type":"humidity","value":0.0,"humidityUnit":"PENCENT"}]}

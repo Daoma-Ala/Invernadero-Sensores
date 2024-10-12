@@ -9,6 +9,8 @@ import com.mycompany.simulador_sensores.dao.iml.SensorDAOImpl;
 import com.mycompany.simulador_sensores.data.DataSen;
 import com.mycompany.simulador_sensores.data.impl.HumidityData;
 import com.mycompany.simulador_sensores.data.impl.TemperatureData;
+import com.mycompany.simulador_sensores.facade.SensorFacade;
+import com.mycompany.simulador_sensores.facade.impl.SensorFacadeImpl;
 import com.mycompany.simulador_sensores.protocol.Protocol;
 import com.mycompany.simulador_sensores.protocol.impl.CoapProtocol;
 import com.mycompany.simulador_sensores.protocol.impl.MqttProtocol;
@@ -17,6 +19,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PantallaSensores extends javax.swing.JFrame {
 
-    private final SensorDAO sensorDAO = SensorDAOImpl.getInstance();
+    private final SensorFacade sensorFacade = new SensorFacadeImpl();
     private boolean btnSensoresSelecionado = false;
     private RegistroSensorView registroSensorView;
     private List<Sensor> sensores;
@@ -38,7 +41,7 @@ public class PantallaSensores extends javax.swing.JFrame {
     }
 
     protected void cargarDatosTabla() {
-        sensores = sensorDAO.readAllSensors();
+        sensores = sensorFacade.readAllSensors();
         DefaultTableModel model = (DefaultTableModel) tblSensores.getModel();
         model.setRowCount(0);
         for (Sensor sensor : sensores) {
@@ -276,6 +279,11 @@ public class PantallaSensores extends javax.swing.JFrame {
         tblSensores.setShowGrid(false);
         tblSensores.getTableHeader().setResizingAllowed(false);
         tblSensores.getTableHeader().setReorderingAllowed(false);
+        tblSensores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSensoresMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblSensores);
         if (tblSensores.getColumnModel().getColumnCount() > 0) {
             tblSensores.getColumnModel().getColumn(0).setResizable(false);
@@ -373,6 +381,41 @@ public class PantallaSensores extends javax.swing.JFrame {
         registroSensorView.setVisible(true);
     }//GEN-LAST:event_btnRegistrarMouseClicked
 
+    private void tblSensoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSensoresMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 1) {
+            int filaSeleccionada = tblSensores.rowAtPoint(evt.getPoint());
+            if (filaSeleccionada != -1) {
+                mostrarDialogoEmergente(filaSeleccionada);
+            }
+        }
+    }//GEN-LAST:event_tblSensoresMouseClicked
+
+    private void mostrarDialogoEmergente(int filaSeleccionada) {
+        // Opciones para el cuadro de diálogo
+
+        Object[] opciones = {"Eliminar", "Actualizar", "Cancelar"};
+
+        // Mostrar cuadro de diálogo
+        int seleccion = JOptionPane.showOptionDialog(
+                this,
+                "¿Qué acción deseas realizar en la fila seleccionada?",
+                "Selecciona una acción",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, // Icono personalizado (null para usar el predeterminado)
+                opciones,
+                opciones[2]); // Selección predeterminada (Cancelar)
+
+        // Acción basada en la selección del usuario
+        if (seleccion == JOptionPane.YES_OPTION) {
+            // Eliminar la fila
+            // eliminarFila(filaSeleccionada);
+        } else if (seleccion == JOptionPane.NO_OPTION) {
+            // Actualizar la fila
+            // actualizarFila(filaSeleccionada);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnCerrar;

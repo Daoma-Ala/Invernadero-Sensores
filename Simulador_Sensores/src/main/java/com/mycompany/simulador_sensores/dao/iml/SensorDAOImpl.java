@@ -42,7 +42,8 @@ public class SensorDAOImpl implements SensorDAO {
         if (validateExistenceSensor(nombreDocumento)) {
             LOGGER.log(Level.SEVERE, "Error: An already exists "
                     + "sensor with specified file name");
-            return;
+            throw new IllegalArgumentException("Ya existe un sensor con la serie: " + sensor.getSerie());
+
         }
         try {
             mapper.writeValue(new File(nombreDocumento), sensor);
