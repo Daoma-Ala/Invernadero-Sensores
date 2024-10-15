@@ -383,7 +383,7 @@ public class PantallaSensores extends javax.swing.JFrame {
 
     private void tblSensoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSensoresMouseClicked
         // TODO add your handling code here:
-        if (evt.getClickCount() == 1) {
+        if (evt.getClickCount() == 2) {
             int filaSeleccionada = tblSensores.rowAtPoint(evt.getPoint());
             if (filaSeleccionada != -1) {
                 mostrarDialogoEmergente(filaSeleccionada);
@@ -392,20 +392,16 @@ public class PantallaSensores extends javax.swing.JFrame {
     }//GEN-LAST:event_tblSensoresMouseClicked
 
     private void mostrarDialogoEmergente(int filaSeleccionada) {
-        // Opciones para el cuadro de diálogo
-
         Object[] opciones = {"Eliminar", "Actualizar", "Cancelar"};
-
-        // Mostrar cuadro de diálogo
         int seleccion = JOptionPane.showOptionDialog(
                 this,
                 "¿Qué acción deseas realizar en la fila seleccionada?",
                 "Selecciona una acción",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
-                null, // Icono personalizado (null para usar el predeterminado)
+                null,
                 opciones,
-                opciones[2]); // Selección predeterminada (Cancelar)
+                opciones[2]);
 
         // Acción basada en la selección del usuario
         if (seleccion == JOptionPane.YES_OPTION) {
