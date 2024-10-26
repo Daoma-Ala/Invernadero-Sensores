@@ -1,1 +1,0 @@
-{"serie":"12","timeInterval":1,"status":false,"protocol":{"type":"mqtt","client":null,"broker":"tcp://broker.emqx.io:1883","clientId":"12","topic":"sensor/(Ingrese la identificador del gateway)"},"data":[{"type":"humidity","value":0.0,"humidityUnit":"PENCENT"}]}

@@ -1,1 +1,0 @@
-{"serie":"sdfsdf","timeInterval":1,"status":false,"protocol":{"type":"mqtt","client":null,"broker":"tcp://broker.emqx.io:1883","clientId":"sdfsdf","topic":"sensor/sdf"},"data":[{"type":"humidity","value":0.0,"humidityUnit":"PENCENT"},{"type":"temperature","value":0.0,"temperatureUnit":"FAHRENHEIT"}]}

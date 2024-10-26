@@ -19,6 +19,8 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Class abstract that models the behavior of sensors. This class serves as a
@@ -56,6 +58,11 @@ public class Sensor {
      * Data interface used by the sensor to capture measurements
      */
     private List<DataSen> data;
+
+    /**
+     * Data when sensor data was captured
+     */
+    private String captureData;
 
     @JsonIgnore
     private transient ScheduledExecutorService scheduler;
@@ -98,6 +105,7 @@ public class Sensor {
         for (DataSen dataImp : data) {
             dataImp.sense();
         }
+        dateFormat();
     }
 
     private boolean isSensorRunning() {
@@ -132,6 +140,13 @@ public class Sensor {
             LOGGER.log(Level.SEVERE, null, ex);
         }
         System.out.println(this.toString());
+    }
+
+    private void dateFormat() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String FormattedDateTime = currentDateTime.format(format);
+        captureData = FormattedDateTime;
     }
 
 }

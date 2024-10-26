@@ -21,6 +21,13 @@ public class MessageFormat {
     public MessageFormat() {
     }
 
+    public MessageFormat(String serie, String date, List<Data> data, int interval) {
+        this.serie = serie;
+        this.date = date;
+        this.data = data;
+        this.interval = interval;
+    }
+
     public MessageFormat(String serie, String date, List<Data> data, int interval, String gateway) {
         this.serie = serie;
         this.date = date;

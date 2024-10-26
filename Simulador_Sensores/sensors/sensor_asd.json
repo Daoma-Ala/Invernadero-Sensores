@@ -1,1 +1,0 @@
-{"serie":"asd","timeInterval":4,"status":false,"protocol":{"type":"coap","coapServerUri":"coap://localhost:5683/asd"},"data":[{"type":"temperature","value":0.0,"temperatureUnit":"FAHRENHEIT"}]}

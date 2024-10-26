@@ -4,21 +4,25 @@
  */
 package com.mycompany.gateway_sensores.receiver.impl;
 
+import com.mycompany.gateway_sensores.gateway.IGateway;
+import com.mycompany.gateway_sensores.helpers.MessageProcess;
 import org.eclipse.californium.core.CoapServer;
 
-import com.mycompany.gateway_sensores.receiver.IProtocolReceiver;
+import com.mycompany.utilities.formatGateway.MessageFormat;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP;
 import org.eclipse.californium.core.server.resources.CoapExchange;
+import com.mycompany.gateway_sensores.receiver.ProtocolReceiver;
 
 /**
  *
  * @author daniel
  */
-public class ProtocolReceiverCoap implements IProtocolReceiver {
+public class ProtocolReceiverCoap implements ProtocolReceiver {
 
     private final CoapServer coapServer;
     private final String resource;
+    private IGateway gateway;
 
     public ProtocolReceiverCoap(String resource) {
         this.resource = resource;
@@ -51,8 +55,12 @@ public class ProtocolReceiverCoap implements IProtocolReceiver {
     }
 
     private void processMessage(String message) {
-//        MessageFormat proccesMessage = messageProcess.messageFormat(message);
-//        gateway.processMessage(proccesMessage);
+        MessageFormat proccesMessage = MessageProcess.messageFormat(message);
+        gateway.processMessage(proccesMessage);
+    }
+
+    public void setGateway(IGateway gateway) {
+        this.gateway = gateway;
     }
 
 }

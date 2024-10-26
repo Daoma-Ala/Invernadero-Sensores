@@ -1,1 +1,0 @@
-{"serie":"(Ingrese la serie)","timeInterval":4,"status":false,"protocol":{"type":"coap","coapServerUri":"coap://localhost:5683/22"},"data":[{"type":"humidity","value":0.0,"humidityUnit":"PENCENT"},{"type":"temperature","value":0.0,"temperatureUnit":"FAHRENHEIT"}]}
