@@ -7,8 +7,9 @@ package com.mycompany.gateway_sensores.helpers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mycompany.utilities.formatGateway.Data;
-import com.mycompany.utilities.formatGateway.MessageFormat;
+import com.mycompany.utilities.exchange.RequestFormat;
+import com.mycompany.gateway_sensores.message.Data;
+import com.mycompany.gateway_sensores.message.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +57,18 @@ public class MessageProcess {
             return Optional.of(medidaNode.get("humidityUnit").asText());
         }
         return Optional.empty();
+    }
+
+    public static String constructJsonArray(List<MessageFormat> messages) {
+        try {
+            String jsonArray = mapper.writeValueAsString(messages);
+            RequestFormat requestFormat = new RequestFormat(jsonArray, "create-muestras");
+            String json = mapper.writeValueAsString(requestFormat);
+            return json;
+        } catch (JsonProcessingException e) {
+            System.err.println("Error processing json: " + e.getMessage());
+            return "[]";
+        }
     }
 
 }

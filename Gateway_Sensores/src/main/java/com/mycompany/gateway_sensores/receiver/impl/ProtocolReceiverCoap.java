@@ -8,7 +8,7 @@ import com.mycompany.gateway_sensores.gateway.IGateway;
 import com.mycompany.gateway_sensores.helpers.MessageProcess;
 import org.eclipse.californium.core.CoapServer;
 
-import com.mycompany.utilities.formatGateway.MessageFormat;
+import com.mycompany.gateway_sensores.message.MessageFormat;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP;
 import org.eclipse.californium.core.server.resources.CoapExchange;

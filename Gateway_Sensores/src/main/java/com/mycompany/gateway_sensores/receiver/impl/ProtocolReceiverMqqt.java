@@ -7,7 +7,7 @@ package com.mycompany.gateway_sensores.receiver.impl;
 import com.mycompany.gateway_sensores.gateway.IGateway;
 import com.mycompany.gateway_sensores.helpers.MessageProcess;
 import com.mycompany.gateway_sensores.receiver.ProtocolReceiver;
-import com.mycompany.utilities.formatGateway.MessageFormat;
+import com.mycompany.gateway_sensores.message.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;

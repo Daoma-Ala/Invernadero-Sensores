@@ -11,4 +11,12 @@
         <exec.mainClass>com.mycompany.utilities.Utilities</exec.mainClass>
     </properties>
     <name>Utilities_Sensores</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
