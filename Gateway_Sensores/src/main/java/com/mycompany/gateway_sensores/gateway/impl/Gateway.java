@@ -5,6 +5,7 @@
 package com.mycompany.gateway_sensores.gateway.impl;
 
 import com.mycompany.gateway_sensores.gateway.IGateway;
+import com.mycompany.gateway_sensores.helpers.FactoryProtocol;
 import com.mycompany.gateway_sensores.helpers.MessageProcess;
 import com.mycompany.gateway_sensores.receiver.ProtocolReceiver;
 import com.mycompany.gateway_sensores.sender.ProtocolSender;
@@ -23,7 +24,8 @@ import java.util.concurrent.TimeUnit;
 public class Gateway implements IGateway {
 
     private String series;
-    private List<ProtocolReceiver> sensors;
+    private String exchange;
+    private final List<ProtocolReceiver> sensors = new ArrayList<>();
     private ProtocolSender server;
     private final List<MessageFormat> mensajes = new ArrayList<>();
     private transient ScheduledExecutorService scheduler;
@@ -32,11 +34,22 @@ public class Gateway implements IGateway {
     public Gateway() {
     }
 
-    public Gateway(String series, List<ProtocolReceiver> sensors, ProtocolSender server, int captureTime) {
+    public Gateway(String series, int captureTime, String exchange) {
         this.series = series;
-        this.sensors = sensors;
-        this.server = server;
+        this.exchange = exchange;
         this.captureTime = captureTime;
+        setProtocolsReceiver(series);
+        setProtocolSender(exchange);
+    }
+
+    private void setProtocolsReceiver(String series) {
+        sensors.add(FactoryProtocol.createProtocolReceiverCoap(series, this));
+        sensors.add(FactoryProtocol.createProtocolReceiverMqqt(series, this));
+        server = FactoryProtocol.createProtocolSenderRabbit(series);
+    }
+
+    private void setProtocolSender(String exchange) {
+        server = FactoryProtocol.createProtocolSenderRabbit(exchange);
     }
 
     public void startGateway() {

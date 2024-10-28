@@ -30,10 +30,11 @@ public class ProtocolReceiverMqqt implements ProtocolReceiver {
     private final String topic;
     private IGateway gateway;
 
-    public ProtocolReceiverMqqt(String broker, String clientId, String topic) {
+    public ProtocolReceiverMqqt(String broker, String clientId, String topic, IGateway gateway) {
         this.broker = broker;
         this.clientId = clientId;
         this.topic = topic;
+        this.gateway = gateway;
     }
 
     @Override
@@ -89,10 +90,6 @@ public class ProtocolReceiverMqqt implements ProtocolReceiver {
                 Logger.getLogger(ProtocolReceiverMqqt.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-
-    public void setGateway(IGateway gateway) {
-        this.gateway = gateway;
     }
 
     private void processMessage(String message) {

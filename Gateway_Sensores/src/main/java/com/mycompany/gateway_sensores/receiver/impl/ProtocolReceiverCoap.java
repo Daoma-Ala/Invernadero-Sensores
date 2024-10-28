@@ -20,13 +20,13 @@ import com.mycompany.gateway_sensores.receiver.ProtocolReceiver;
  */
 public class ProtocolReceiverCoap implements ProtocolReceiver {
 
-    private final CoapServer coapServer;
+    private final CoapServer coapServer = new CoapServer();
     private final String resource;
     private IGateway gateway;
 
-    public ProtocolReceiverCoap(String resource) {
+    public ProtocolReceiverCoap(String resource, IGateway gateway) {
         this.resource = resource;
-        this.coapServer = new CoapServer();
+        this.gateway = gateway;
     }
 
     @Override
@@ -57,10 +57,6 @@ public class ProtocolReceiverCoap implements ProtocolReceiver {
     private void processMessage(String message) {
         MessageFormat proccesMessage = MessageProcess.messageFormat(message);
         gateway.processMessage(proccesMessage);
-    }
-
-    public void setGateway(IGateway gateway) {
-        this.gateway = gateway;
     }
 
 }
