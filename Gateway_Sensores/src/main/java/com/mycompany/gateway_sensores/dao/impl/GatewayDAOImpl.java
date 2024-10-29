@@ -111,6 +111,28 @@ public class GatewayDAOImpl implements GatewayDAO {
         return gateways;
     }
 
+    @Override
+    public void deleteGateway(String serie) {
+        String nombreDocumento = nameDocument(serie);
+        File archivo = new File(nombreDocumento);
+
+        if (!archivo.exists()) {
+            LOGGER.log(Level.SEVERE, "Error: No existe un gateway con la serie especificada.");
+            throw new IllegalArgumentException("No existe un gateway con la serie especificada: " + serie);
+        }
+
+        if (this.readGateway(serie).isStatus()) {
+            LOGGER.log(Level.SEVERE, "Error: El gateway esta en ejecución.");
+            throw new IllegalArgumentException("El gateway esta en ejecución con serie: " + serie);
+        }
+
+        if (archivo.delete()) {
+            LOGGER.info("Gateway eliminado exitosamente: " + nombreDocumento);
+        } else {
+            LOGGER.log(Level.SEVERE, "Error al eliminar el gateway: " + nombreDocumento);
+        }
+    }
+
     private String nameDocument(String serie) {
         return folderPath + File.separator + "gateway_" + serie + typeDocument;
     }

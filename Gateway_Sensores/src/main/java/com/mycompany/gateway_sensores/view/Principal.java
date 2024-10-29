@@ -4,17 +4,91 @@
  */
 package com.mycompany.gateway_sensores.view;
 
+import com.mycompany.gateway_sensores.dao.GatewayDAO;
+import com.mycompany.gateway_sensores.dao.impl.GatewayDAOImpl;
+import com.mycompany.gateway_sensores.gateway.impl.Gateway;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author daniel
  */
-public class Principal extends javax.swing.JFrame {
+public final class Principal extends javax.swing.JFrame {
+
+    private List<Gateway> gateways;
+    private GatewayDAO gatewayDAO = GatewayDAOImpl.getInstance();
+    private List<Monitor> monitors = new ArrayList<>();
 
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
+        cargarDatosTabla();
+        agregarTableModelListener();
+    }
+
+    protected void cargarDatosTabla() {
+        gateways = gatewayDAO.readAllGateways();
+        DefaultTableModel model = (DefaultTableModel) tblGateway.getModel();
+        model.setRowCount(0);
+        for (Gateway gateway : gateways) {
+            model.addRow(crearObjetoTabla(gateway));
+        }
+    }
+
+    private Object[] crearObjetoTabla(Gateway gateway) {
+        String serie = gateway.getSeries();
+        boolean estatus = gateway.isStatus();
+        return new Object[]{serie, estatus};
+    }
+
+    private void agregarTableModelListener() {
+        tblGateway.getModel().addTableModelListener(e -> {
+            int row = e.getFirstRow();
+            int column = e.getColumn();
+
+            if (column == 1) {
+                Boolean activo = (Boolean) tblGateway.getValueAt(row, column);
+                String serie = (String) tblGateway.getValueAt(row, 0);
+                Gateway gateway = findGateway(serie);
+                gateway.setStatus(activo);
+                gatewayDAO.updateGateway(gateway);
+                cargarDatosTabla();
+
+                Monitor monitor = validarMonitor(gateway);
+
+                if (activo && monitor == null) {
+                    monitor = new Monitor(gateway, this);
+                    monitors.add(monitor);
+                    monitor.setVisible(true);
+                } else if (!activo && monitor != null) {
+                    monitor.dispose();
+                    monitors.remove(monitor);
+                }
+            }
+        });
+
+    }
+
+    private Monitor validarMonitor(Gateway gateway) {
+        for (Monitor monitor : monitors) {
+            if (monitor.getGateway().equals(gateway)) {
+                return new Monitor(gateway, this);
+            }
+        }
+        return null;
+    }
+
+    private Gateway findGateway(String serie) {
+        for (Gateway gateway : gateways) {
+            if (gateway.getSeries().equals(serie)) {
+                return gateway;
+            }
+        }
+        return null;
     }
 
     /**
@@ -28,18 +102,19 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblGateway = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(42, 50, 60));
 
-        jTable2.setBackground(new java.awt.Color(255, 255, 255));
-        jTable2.setForeground(new java.awt.Color(51, 51, 51));
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblGateway.setBackground(new java.awt.Color(255, 255, 255));
+        tblGateway.setForeground(new java.awt.Color(51, 51, 51));
+        tblGateway.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -62,11 +137,11 @@ public class Principal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable2.setSelectionBackground(new java.awt.Color(255, 255, 255));
-        jTable2.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jTable2.getTableHeader().setResizingAllowed(false);
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable2);
+        tblGateway.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        tblGateway.setSelectionForeground(new java.awt.Color(51, 51, 51));
+        tblGateway.getTableHeader().setResizingAllowed(false);
+        tblGateway.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tblGateway);
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
@@ -74,10 +149,20 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setText("Gateway IoT");
 
         jButton1.setBackground(new java.awt.Color(93, 162, 113));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Registrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setBackground(new java.awt.Color(255, 51, 51));
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -94,8 +179,10 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(50, 50, 50)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(128, 128, 128)
-                        .addComponent(jButton1)))
+                        .addGap(125, 125, 125)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))))
                 .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -105,9 +192,11 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGap(29, 29, 29))
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -127,50 +216,23 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        RegistrarGateway registrarGateway = new RegistrarGateway();
+        RegistrarGateway registrarGateway = new RegistrarGateway(this);
         registrarGateway.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        EliminarGateway eliminarGateway = new EliminarGateway(this);
+        eliminarGateway.setVisible(true);
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tblGateway;
     // End of variables declaration//GEN-END:variables
 }

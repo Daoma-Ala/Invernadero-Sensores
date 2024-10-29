@@ -17,6 +17,7 @@ public class GatewayDto {
     private String series;
     private int captureTime;
     private String exchange;
+    private boolean status;
 
     public GatewayDto() {
     }
@@ -25,11 +26,14 @@ public class GatewayDto {
         this.series = gateway.getSeries();
         this.captureTime = gateway.getCaptureTime();
         this.exchange = gateway.getExchange();
+        this.status = gateway.isStatus();
     }
 
     @JsonIgnore
     public Gateway getObjectGateway() {
-        return new Gateway(series, captureTime, exchange);
+        Gateway gateway = new Gateway(series, captureTime, exchange);
+        gateway.setStatus(status);
+        return gateway;
     }
 
 }

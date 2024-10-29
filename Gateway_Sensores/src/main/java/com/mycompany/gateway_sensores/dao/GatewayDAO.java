@@ -20,4 +20,6 @@ public interface GatewayDAO {
     public Gateway readGateway(String serie);
 
     public List<Gateway> readAllGateways();
+
+    public void deleteGateway(String serie);
 }

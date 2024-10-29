@@ -14,11 +14,14 @@ import javax.swing.JOptionPane;
  */
 public class RegistrarGateway extends javax.swing.JFrame {
 
+    private Principal principal;
+
     /**
      * Creates new form RegistrarGateway
      */
-    public RegistrarGateway() {
+    public RegistrarGateway(Principal principal) {
         initComponents();
+        this.principal = principal;
     }
 
     /**
@@ -167,6 +170,7 @@ public class RegistrarGateway extends javax.swing.JFrame {
             validarFormulario();
             GatewayDAOImpl.getInstance().addGateway(capturarGateway());
             JOptionPane.showMessageDialog(this, "Gateway Guardado con Exito");
+            principal.cargarDatosTabla();
             this.dispose();
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error al guardar el gateway", JOptionPane.ERROR_MESSAGE);
@@ -193,7 +197,6 @@ public class RegistrarGateway extends javax.swing.JFrame {
         String serie = this.txtSerie.getText();
         String exchange = this.txtExchange.getText();
         int intervaloTiempo = (int) this.tiempo.getValue();
-
         return new Gateway(serie, intervaloTiempo, exchange);
     }
 

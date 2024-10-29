@@ -25,6 +25,7 @@ public class Gateway implements IGateway {
 
     private String series;
     private String exchange;
+    private boolean status;
     private final List<ProtocolReceiver> sensors = new ArrayList<>();
     private ProtocolSender server;
     private final List<MessageFormat> mensajes = new ArrayList<>();
@@ -52,13 +53,6 @@ public class Gateway implements IGateway {
         server = FactoryProtocol.createProtocolSenderRabbit(exchange);
     }
 
-    public void startGateway() {
-        startSensors();
-        starServer();
-        scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(this::sendMessageServer, 0, captureTime, TimeUnit.MINUTES);
-    }
-
     private void startSensors() {
         for (ProtocolReceiver sensor : sensors) {
             sensor.connect();
@@ -68,6 +62,14 @@ public class Gateway implements IGateway {
 
     private void starServer() {
         server.connect();
+    }
+
+    public void startGateway() {
+        startSensors();
+        starServer();
+        status = true;
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(this::sendMessageServer, 0, captureTime, TimeUnit.MINUTES);
     }
 
     public void finishGateway() {
@@ -85,6 +87,7 @@ public class Gateway implements IGateway {
                 scheduler.shutdownNow();
             }
         }
+        status = false;
     }
 
     private void sendMessageServer() {
