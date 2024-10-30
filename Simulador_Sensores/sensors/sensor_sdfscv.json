@@ -1,1 +1,0 @@
-{"serie":"sdfscv","timeInterval":4,"status":false,"protocol":{"type":"coap","coapServerUri":"coap://localhost:5683/2"},"data":[{"type":"humidity","value":0.0,"humidityUnit":"PENCENT"},{"type":"temperature","value":0.0,"temperatureUnit":"CELSIUS"}],"captureData":null}

@@ -77,13 +77,20 @@ public class MqttProtocol implements Protocol {
      */
     @Override
     public void disconnect() {
-        if (client != null && client.isConnected()) {
-            try {
+        try {
+            if (this.client != null && this.client.isConnected()) {
+
                 client.disconnect();
+                client.close();
+                client = null;
                 LOGGER.info("Disconnected from the broker");
-            } catch (MqttException ex) {
-                LOGGER.log(Level.SEVERE, "Failed to disconnect from the broker", ex);
+
+            } else {
+                System.out.println("Cliente MQTT ya está desconectado.");
+                LOGGER.warning("El cliente MQTT no está conectado.");
             }
+        } catch (MqttException ex) {
+            LOGGER.log(Level.SEVERE, "Failed to disconnect from the broker", ex.getMessage());
         }
     }
 
@@ -94,6 +101,11 @@ public class MqttProtocol implements Protocol {
      */
     @Override
     public void publish(String message) {
+        if (client == null || !client.isConnected()) {
+            LOGGER.warning("Cannot publish message. Client is not connected.");
+            return;
+        }
+
         MqttMessage messageSender = createMqttMessage(message);
         try {
 
@@ -110,9 +122,9 @@ public class MqttProtocol implements Protocol {
      * and persistence.
      */
     private void initializeClient() {
-        if (client == null) {
+        if (this.client == null) {
             try {
-                client = new MqttClient(broker, clientId, new MemoryPersistence());
+                this.client = new MqttClient(broker, clientId, new MemoryPersistence());
             } catch (MqttException ex) {
                 LOGGER.log(Level.SEVERE, "Error initializing MQTT client", ex);
             }

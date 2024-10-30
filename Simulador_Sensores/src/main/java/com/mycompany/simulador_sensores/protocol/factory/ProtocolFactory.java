@@ -16,15 +16,17 @@ public class ProtocolFactory {
 
     public static Protocol createProtocol(String type, String serie, String gateway) {
         switch (type) {
-            case "MQTT":
+            case "MQTT" -> {
                 String broker = "tcp://broker.emqx.io:1883";
-                String topic = "sensor/" + gateway;
+                String topic = "sensor/" + "gateway_" + gateway;
                 return (Protocol) MqttProtocol.builder().broker(broker).
-                        clientId(serie).topic(topic).build();
-            case "COAP":
-                String coapServerUri = "coap://localhost:5683/" + gateway;
+                        clientId("sensor_" + serie).topic(topic).build();
+            }
+            case "COAP" -> {
+                String coapServerUri = "coap://localhost:5683/" + "gateway_" + gateway;
                 return (Protocol) CoapProtocol.builder().coapServerUri(coapServerUri).build();
-            default:
+            }
+            default ->
                 throw new IllegalArgumentException("Tipo de protocolo no soportado: " + type);
         }
     }

@@ -58,6 +58,7 @@ public class CoapProtocol implements Protocol {
     public void disconnect() {
         if (client != null) {
             client.shutdown();
+            client = null;
             LOGGER.info("Disconnected from the CoAP server");
         }
     }

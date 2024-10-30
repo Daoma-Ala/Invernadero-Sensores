@@ -1,1 +1,0 @@
-{"serie":"asd","timeInterval":2,"status":false,"protocol":{"type":"mqtt","broker":"tcp://broker.emqx.io:1883","clientId":"asd","topic":"sensor/1"},"data":[{"type":"humidity","value":0.0,"humidityUnit":"PENCENT"},{"type":"temperature","value":0.0,"temperatureUnit":"CELSIUS"}],"captureData":null}

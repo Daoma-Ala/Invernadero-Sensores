@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.simulador_sensores.sensor;
 
@@ -47,7 +47,7 @@ public class Sensor {
     /**
      * Current status of the sensor (true if active, false otherwise)
      */
-    private boolean status;
+    private volatile boolean status;
 
     /**
      * Protocol used for communication by the sensor
@@ -72,33 +72,57 @@ public class Sensor {
      * Starts the sensor operation. This method is used to initialize and begin
      * the sensor's data collection process.
      */
-    public void startSensor() {
+    public synchronized void startSensor() {
         if (isSensorRunning()) {
             LOGGER.info("The sensor is already running");
             return;
         }
-        initializeScheduler();
-        startDataCollection();
-        status = true;
+
+        if (scheduler == null) {
+            status = true;
+            protocol.connect();
+            scheduler = Executors.newScheduledThreadPool(1);
+            System.out.println("Scheduler initialized.");
+            startDataCollection();
+        } else {
+            System.out.println("Scheduler is already running.");
+        }
+
     }
 
     /**
      * Stops the sensor operation. This method is used to halt the sensor's data
      * collection process and perform any necessary cleanup.
      */
-    public void stopSensor() {
+    public synchronized void stopSensor() {
+        LOGGER.info("Stopping the sensor...");
         if (!status) {
             LOGGER.info("The sensor is not already running");
             return;
         }
+
+        status = false; // Cambia el estado antes de detener el scheduler
         try {
-            status = false;
-            protocol.disconnect();
-            if (scheduler != null && !scheduler.isShutdown()) {
-                scheduler.shutdown();
+            if (scheduler != null) {
+                scheduler.shutdown(); // Detiene la recepción de nuevas tareas
+                try {
+                    if (!scheduler.awaitTermination(60, TimeUnit.SECONDS)) {
+                        scheduler.shutdownNow(); // Forzar el apagado
+                    }
+                    System.out.println("Sensor detenido correctamente.");
+                } catch (InterruptedException e) {
+                    scheduler.shutdownNow(); // Forzar el apagado si se interrumpe
+                    Thread.currentThread().interrupt(); // Restaura el estado de interrupción
+                }
+            } else {
+                LOGGER.warning("El scheduler ya estaba nulo.");
             }
+
+            protocol.disconnect(); // Desconectar el protocolo
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "Error during disconnection", ex);
+        } finally {
+            scheduler = null; // Asegúrate de poner a null después de apagarlo
         }
     }
 
@@ -110,23 +134,22 @@ public class Sensor {
     }
 
     private boolean isSensorRunning() {
-        return status && scheduler != null && !scheduler.isShutdown();
-    }
-
-    private void initializeScheduler() {
-        if (scheduler == null || scheduler.isShutdown()) {
-            scheduler = Executors.newScheduledThreadPool(1);
-        }
+        return status;
     }
 
     private void startDataCollection() {
         try {
-            protocol.connect();
             Runnable metodo = () -> {
+                if (!status) {
+                    return;
+                }
                 takeData();
                 publishData();
+
             };
-            scheduler.scheduleAtFixedRate(metodo, 0, timeInterval, TimeUnit.SECONDS);
+            if (scheduler != null && !scheduler.isShutdown()) {
+                scheduler.scheduleAtFixedRate(metodo, 0, timeInterval, TimeUnit.SECONDS);
+            }
         } catch (Exception ex) {
             status = false;
             LOGGER.log(Level.SEVERE, null, ex);
@@ -135,11 +158,15 @@ public class Sensor {
 
     private void publishData() {
         try {
-            protocol.publish(MapperToJson.mapperToJsonSensor(this));
+            if (status) {
+                protocol.publish(MapperToJson.mapperToJsonSensor(this));
+                System.out.println(this.toString());
+            }
+
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
-        System.out.println(this.toString());
+
     }
 
     private void dateFormat() {

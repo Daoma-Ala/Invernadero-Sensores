@@ -15,6 +15,12 @@ public interface SensorFacade {
 
     public void addSensor(Sensor sensor);
 
+    public void updateSensor(Sensor sensor);
+
+    public Sensor readSensor(String serie);
+
     public List<Sensor> readAllSensors();
+
+    public void deleteSensor(String serie);
 
 }

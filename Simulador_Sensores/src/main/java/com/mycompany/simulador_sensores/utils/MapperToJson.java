@@ -32,7 +32,7 @@ public class MapperToJson {
         try {
             if (sensor == null) {
                 throw new IllegalArgumentException("Sensor cannot be null");
-            }
+            } 
 
             ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(sensor);

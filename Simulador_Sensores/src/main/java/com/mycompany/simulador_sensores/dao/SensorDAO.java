@@ -21,4 +21,5 @@ public interface SensorDAO {
 
     public List<Sensor> readAllSensors();
 
+    public void deleteSensor(String serie);
 }

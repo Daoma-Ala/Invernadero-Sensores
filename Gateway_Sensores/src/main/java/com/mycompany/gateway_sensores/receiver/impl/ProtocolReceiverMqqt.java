@@ -28,7 +28,7 @@ public class ProtocolReceiverMqqt implements ProtocolReceiver {
     private final String broker;
     private final String clientId;
     private final String topic;
-    private IGateway gateway;
+    private final IGateway gateway;
 
     public ProtocolReceiverMqqt(String broker, String clientId, String topic, IGateway gateway) {
         this.broker = broker;

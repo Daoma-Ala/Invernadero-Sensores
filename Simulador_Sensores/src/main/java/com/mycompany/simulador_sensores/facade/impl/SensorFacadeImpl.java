@@ -15,23 +15,45 @@ import java.util.List;
  * @author daniel
  */
 public class SensorFacadeImpl implements SensorFacade {
-
+    
     private final SensorDAO sensorDAO = SensorDAOImpl.getInstance();
-
+    
     public SensorFacadeImpl() {
     }
-
+    
     @Override
     public void addSensor(Sensor sensor) {
         validateSensor(sensor);
         sensorDAO.addSensor(sensor);
     }
-
+    
+    @Override
+    public void updateSensor(Sensor sensor) {
+        validateSensor(sensor);
+        sensorDAO.updateSensor(sensor);
+    }
+    
+    @Override
+    public Sensor readSensor(String serie) {
+        if (serie == null || serie.isEmpty()) {
+            throw new IllegalArgumentException("El campo 'serie' no puede estar vacío o nulo.");
+        }
+        return sensorDAO.readSensor(serie);
+    }
+    
     @Override
     public List<Sensor> readAllSensors() {
         return sensorDAO.readAllSensors();
     }
-
+    
+    @Override
+    public void deleteSensor(String serie) {
+        if (serie == null || serie.isEmpty()) {
+            throw new IllegalArgumentException("El campo 'serie' no puede estar vacío o nulo.");
+        }
+        sensorDAO.deleteSensor(serie);
+    }
+    
     private void validateSensor(Sensor sensor) {
         if (sensor.getSerie() == null || sensor.getSerie().isEmpty()) {
             throw new IllegalArgumentException("El campo 'serie' no puede estar vacío o nulo.");
@@ -46,5 +68,5 @@ public class SensorFacadeImpl implements SensorFacade {
             throw new IllegalArgumentException("Las muestras del sensor no pueden ser nulos o vacíos.");
         }
     }
-
+    
 }

@@ -108,6 +108,28 @@ public class SensorDAOImpl implements SensorDAO {
         return sensores;
     }
 
+    @Override
+    public void deleteSensor(String serie) {
+        String nombreDocumento = nameDocument(serie);
+        File archivo = new File(nombreDocumento);
+
+        if (!archivo.exists()) {
+            LOGGER.log(Level.SEVERE, "Error: No existe un sensor con la serie especificada.");
+            throw new IllegalArgumentException("No existe un sensor con la serie especificada: " + serie);
+        }
+
+        if (this.readSensor(serie).isStatus()) {
+            LOGGER.log(Level.SEVERE, "Error: El Sensor esta en ejecución.");
+            throw new IllegalArgumentException("El sensor esta en ejecución con serie: " + serie);
+        }
+
+        if (archivo.delete()) {
+            LOGGER.log(Level.INFO, "Sensor eliminado exitosamente: {0}", nombreDocumento);
+        } else {
+            LOGGER.log(Level.SEVERE, "Error al eliminar el sensor: {0}", nombreDocumento);
+        }
+    }
+
     private String nameDocument(String serie) {
         return folderPath + File.separator + "sensor_" + serie + typeDocument;
     }

@@ -4,8 +4,6 @@
  */
 package com.mycompany.simulador_sensores.view;
 
-import com.mycompany.simulador_sensores.dao.SensorDAO;
-import com.mycompany.simulador_sensores.dao.iml.SensorDAOImpl;
 import com.mycompany.simulador_sensores.data.DataSen;
 import com.mycompany.simulador_sensores.data.impl.HumidityData;
 import com.mycompany.simulador_sensores.data.impl.TemperatureData;
@@ -18,7 +16,6 @@ import com.mycompany.simulador_sensores.sensor.Sensor;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,20 +23,30 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Daniel
  */
-public class PantallaSensores extends javax.swing.JFrame {
+public final class PantallaSensores extends javax.swing.JFrame {
 
     private final SensorFacade sensorFacade = new SensorFacadeImpl();
     private boolean btnSensoresSelecionado = false;
     private RegistroSensorView registroSensorView;
     private List<Sensor> sensores;
+    private final List<Sensor> sensoresActivos = new ArrayList<>();
+    
 
     public PantallaSensores() {
         initComponents();
-        cargarDatosTabla();
         validarTitulo();
+        cargarDatosTabla();
         this.tblSensores.setBackground(Color.RED);
         this.tblSensores.setSelectionBackground(Color.RED);
         registroSensorView = new RegistroSensorView(this);
+    }
+
+    private void validarTitulo() {
+        if (btnSensoresSelecionado == false) {
+            this.txtTitulo.setText("Sensores Desactivados");
+        } else if (btnSensoresSelecionado == true) {
+            this.txtTitulo.setText("Sensores Activados");
+        }
     }
 
     protected void cargarDatosTabla() {
@@ -51,20 +58,11 @@ public class PantallaSensores extends javax.swing.JFrame {
         }
     }
 
-    private void validarTitulo() {
-        if (btnSensoresSelecionado == false) {
-            this.txtTitulo.setText("Sensores Desactivados");
-        } else if (btnSensoresSelecionado == true) {
-            this.txtTitulo.setText("Sensores Activados");
-        }
-    }
-
     private Object[] crearObjetoTabla(Sensor sensor) {
         String serie = sensor.getSerie();
-
         boolean estatus = sensor.isStatus();
-        List<String> mediciones = validarTipoMedicion(sensor.getData());
         String protocolo = validarProtocolo(sensor.getProtocol());
+        List<String> mediciones = validarTipoMedicion(sensor.getData());
         int tiempoCaptura = sensor.getTimeInterval();
 
         if (mediciones.size() == 2) {
@@ -98,6 +96,7 @@ public class PantallaSensores extends javax.swing.JFrame {
             return "COAP";
         } else if (protocol instanceof MqttProtocol) {
             return "MQTT";
+
         }
         return null;
     }
@@ -120,13 +119,11 @@ public class PantallaSensores extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        btnCerrar = new javax.swing.JLabel();
-        btnComprimir = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSensores = new javax.swing.JTable();
         txtTitulo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
         setType(java.awt.Window.Type.UTILITY);
@@ -238,25 +235,9 @@ public class PantallaSensores extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
-        btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cerrar.png"))); // NOI18N
-        btnCerrar.setToolTipText("");
-        btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCerrarMouseClicked(evt);
-            }
-        });
-
-        btnComprimir.setBackground(new java.awt.Color(255, 51, 51));
-        btnComprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/comprimir-alt.png"))); // NOI18N
-        btnComprimir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnComprimirMouseClicked(evt);
-            }
-        });
-
         tblSensores.setBackground(new java.awt.Color(255, 255, 255));
         tblSensores.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        tblSensores.setForeground(new java.awt.Color(102, 102, 102));
+        tblSensores.setForeground(new java.awt.Color(0, 0, 0));
         tblSensores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -295,7 +276,7 @@ public class PantallaSensores extends javax.swing.JFrame {
             tblSensores.getColumnModel().getColumn(5).setPreferredWidth(10);
         }
 
-        txtTitulo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtTitulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         txtTitulo.setForeground(new java.awt.Color(0, 0, 0));
         txtTitulo.setText("jLabel3");
 
@@ -311,24 +292,14 @@ public class PantallaSensores extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnComprimir)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCerrar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(btnComprimir))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCerrar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtTitulo, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addGap(14, 14, 14)
+                .addComponent(txtTitulo)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(29, Short.MAX_VALUE))
@@ -339,16 +310,6 @@ public class PantallaSensores extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseClicked
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_btnCerrarMouseClicked
-
-    private void btnComprimirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprimirMouseClicked
-        // TODO add your handling code here:
-        this.setExtendedState(JFrame.ICONIFIED);
-    }//GEN-LAST:event_btnComprimirMouseClicked
 
     private void btnIniciarSensoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSensoresMouseClicked
         // TODO add your handling code here:
@@ -369,14 +330,18 @@ public class PantallaSensores extends javax.swing.JFrame {
 
     private void inciarSensores() {
         for (Sensor sensor : sensores) {
+            sensoresActivos.add(sensor);
             sensor.startSensor();
+            sensorFacade.updateSensor(sensor);
         }
     }
 
     private void pararSensores() {
-        for (Sensor sensor : sensores) {
+        for (Sensor sensor : sensoresActivos) {
             sensor.stopSensor();
+            sensorFacade.updateSensor(sensor);
         }
+        sensoresActivos.clear();
     }
     private void btnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseClicked
         // TODO add your handling code here:
@@ -416,9 +381,13 @@ public class PantallaSensores extends javax.swing.JFrame {
         }
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        pararSensores();
+        System.exit(0);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnCerrar;
-    private javax.swing.JLabel btnComprimir;
     private javax.swing.JLabel btnIniciarSensores;
     private javax.swing.JLabel btnRegistrar;
     private javax.swing.JLabel jLabel4;

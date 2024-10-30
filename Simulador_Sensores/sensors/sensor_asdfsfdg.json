@@ -1,0 +1,1 @@
+{"serie":"asdfsfdg","timeInterval":4,"status":false,"protocol":{"type":"mqtt","broker":"tcp://broker.emqx.io:1883","clientId":"sensor_asdfsfdg","topic":"sensor/gateway_1"},"data":[{"type":"humidity","value":43.55471,"humidityUnit":"PENCENT"},{"type":"temperature","value":15.722587,"temperatureUnit":"CELSIUS"}],"captureData":"30-10-2024 11:34:39"}
