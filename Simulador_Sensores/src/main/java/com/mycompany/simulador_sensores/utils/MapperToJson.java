@@ -29,10 +29,11 @@ public class MapperToJson {
      * @return
      */
     public static String mapperToJsonSensor(Sensor sensor) {
-        if (sensor == null) {
-            throw new IllegalArgumentException("Sensor cannot be null");
-        }
         try {
+            if (sensor == null) {
+                throw new IllegalArgumentException("Sensor cannot be null");
+            }
+
             ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(sensor);
         } catch (JsonProcessingException ex) {

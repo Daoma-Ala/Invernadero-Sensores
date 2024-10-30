@@ -4,11 +4,10 @@
  */
 package test;
 
-import com.mycompany.simulador_sensores.protocol.impl.CoapProtocol;
-import org.eclipse.californium.core.CoapClient;
-import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.eclipse.californium.core.CoapResource;
+import org.eclipse.californium.core.CoapServer;
+import org.eclipse.californium.core.coap.CoAP;
+import org.eclipse.californium.core.server.resources.CoapExchange;
 
 /**
  *
@@ -16,18 +15,18 @@ import org.mockito.MockitoAnnotations;
  */
 public class CoapProtocolTest {
 
-    private CoapProtocol coapProtocol;
-
-    @Mock
-    private CoapClient coapClientMock;
-
-    @BeforeEach
-    void setup() {
-        MockitoAnnotations.openMocks(this);
-        coapProtocol = coapProtocol.builder()
-                .client(coapClientMock)
-                .coapServerUri("coap://example.com/test")
-                .build();
+    public static void main(String[] args) {
+        CoapServer server = new CoapServer();
+        CoapResource testResource = new CoapResource("test") {
+            @Override
+            public void handlePOST(CoapExchange exchange) {
+                String requestContent = exchange.getRequestText();
+                System.out.println("Received POST request: " + requestContent);
+                exchange.respond(CoAP.ResponseCode.CONTENT, "Request received");
+            }
+        };
+        server.add(testResource);
+        server.start();
     }
 
 }

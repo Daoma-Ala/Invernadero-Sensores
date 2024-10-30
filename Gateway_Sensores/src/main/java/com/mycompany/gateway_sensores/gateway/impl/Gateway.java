@@ -10,6 +10,7 @@ import com.mycompany.gateway_sensores.helpers.MessageProcess;
 import com.mycompany.gateway_sensores.receiver.ProtocolReceiver;
 import com.mycompany.gateway_sensores.sender.ProtocolSender;
 import com.mycompany.gateway_sensores.message.MessageFormat;
+import com.mycompany.gateway_sensores.utils.oberser.Observable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -31,6 +32,7 @@ public class Gateway implements IGateway {
     private final List<MessageFormat> mensajes = new ArrayList<>();
     private transient ScheduledExecutorService scheduler;
     private int captureTime;
+    private final List<Observable> observables = new ArrayList<>();
 
     public Gateway() {
     }
@@ -73,6 +75,7 @@ public class Gateway implements IGateway {
     }
 
     public void finishGateway() {
+        status = false;
         for (ProtocolReceiver protocolReceiver : sensors) {
             protocolReceiver.desconnect();
         }
@@ -87,7 +90,7 @@ public class Gateway implements IGateway {
                 scheduler.shutdownNow();
             }
         }
-        status = false;
+
     }
 
     private void sendMessageServer() {
@@ -105,6 +108,17 @@ public class Gateway implements IGateway {
     public void processMessage(MessageFormat message) {
         message.setGateway(series);
         this.mensajes.add(message);
+        notificar();
+
     }
 
+    public void addObservable(Observable observable) {
+        this.observables.add(observable);
+    }
+
+    private void notificar() {
+        for (Observable observable : observables) {
+            observable.update();
+        }
+    }
 }

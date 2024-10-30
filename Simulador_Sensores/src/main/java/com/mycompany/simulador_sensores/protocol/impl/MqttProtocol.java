@@ -16,6 +16,7 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Class that implements the logic for sending messages asynchronously using the
@@ -34,6 +35,7 @@ public class MqttProtocol implements Protocol {
     /**
      * MQTT client for handling connection and communication
      */
+    @JsonIgnore
     private transient MqttClient client;
 
     /**
@@ -94,6 +96,7 @@ public class MqttProtocol implements Protocol {
     public void publish(String message) {
         MqttMessage messageSender = createMqttMessage(message);
         try {
+
             client.publish(topic, messageSender);
             LOGGER.info("Published message to topic '" + topic + "': " + message);
         } catch (MqttException ex) {

@@ -37,6 +37,8 @@ public class PantallaSensores extends javax.swing.JFrame {
         initComponents();
         cargarDatosTabla();
         validarTitulo();
+        this.tblSensores.setBackground(Color.RED);
+        this.tblSensores.setSelectionBackground(Color.RED);
         registroSensorView = new RegistroSensorView(this);
     }
 
@@ -126,9 +128,8 @@ public class PantallaSensores extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setUndecorated(true);
         setResizable(false);
-        setType(java.awt.Window.Type.POPUP);
+        setType(java.awt.Window.Type.UTILITY);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(221, 208, 200));
@@ -274,7 +275,7 @@ public class PantallaSensores extends javax.swing.JFrame {
         });
         tblSensores.setFocusable(false);
         tblSensores.setRowHeight(25);
-        tblSensores.setSelectionBackground(new java.awt.Color(221, 208, 200));
+        tblSensores.setSelectionBackground(new java.awt.Color(60, 63, 65));
         tblSensores.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tblSensores.setShowGrid(false);
         tblSensores.getTableHeader().setResizingAllowed(false);
@@ -353,11 +354,13 @@ public class PantallaSensores extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!btnSensoresSelecionado) {
             btnSensoresSelecionado = true;
-            this.tab1.setBackground(Color.red);
+            this.tblSensores.setBackground(Color.GREEN);
+            this.tblSensores.setSelectionBackground(Color.GREEN);
             inciarSensores();
         } else {
             this.btnSensoresSelecionado = false;
-            this.tab1.setBackground(new Color(255, 153, 153));
+            this.tblSensores.setBackground(Color.RED);
+            this.tblSensores.setSelectionBackground(Color.RED);
             pararSensores();
         }
         validarTitulo();
@@ -426,7 +429,7 @@ public class PantallaSensores extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel tab1;
-    public static javax.swing.JTable tblSensores;
+    public javax.swing.JTable tblSensores;
     private javax.swing.JLabel txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

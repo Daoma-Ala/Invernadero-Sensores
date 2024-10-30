@@ -36,7 +36,6 @@ public class SensorDAOImpl implements SensorDAO {
         return sensorDAOImpl;
     }
 
-
     @Override
     public void addSensor(Sensor sensor) {
         String nombreDocumento = nameDocument(sensor.getSerie());

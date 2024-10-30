@@ -79,6 +79,7 @@ public class Sensor {
         }
         initializeScheduler();
         startDataCollection();
+        status = true;
     }
 
     /**
@@ -90,14 +91,14 @@ public class Sensor {
             LOGGER.info("The sensor is not already running");
             return;
         }
-        setStatus(false);
-        if (scheduler != null && !scheduler.isShutdown()) {
-            scheduler.shutdownNow();
-        }
         try {
+            status = false;
             protocol.disconnect();
+            if (scheduler != null && !scheduler.isShutdown()) {
+                scheduler.shutdown();
+            }
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "Error during disconnection", ex);
         }
     }
 
@@ -113,7 +114,6 @@ public class Sensor {
     }
 
     private void initializeScheduler() {
-        setStatus(true);
         if (scheduler == null || scheduler.isShutdown()) {
             scheduler = Executors.newScheduledThreadPool(1);
         }
@@ -128,7 +128,7 @@ public class Sensor {
             };
             scheduler.scheduleAtFixedRate(metodo, 0, timeInterval, TimeUnit.SECONDS);
         } catch (Exception ex) {
-            setStatus(false);
+            status = false;
             LOGGER.log(Level.SEVERE, null, ex);
         }
     }

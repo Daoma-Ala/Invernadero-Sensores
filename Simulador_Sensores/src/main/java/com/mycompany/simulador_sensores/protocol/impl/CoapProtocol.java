@@ -48,7 +48,7 @@ public class CoapProtocol implements Protocol {
      */
     @Override
     public void connect() {
-        // CoAP clients do not need an explicit connection step
+        client = new CoapClient(coapServerUri);
     }
 
     /**
@@ -98,11 +98,12 @@ public class CoapProtocol implements Protocol {
      * @throws CoapPublishException if the response indicates a failure.
      */
     private void handleResponse(CoapResponse response) {
-        if (response != null && response.isSuccess()) {
-            LOGGER.info("Successfully sent data to the CoAP server");
-        } else {
-            String errorMsg = "Error sending data to the CoAP server: " + (response != null ? response.getResponseText() : "no response");
-            throw new RuntimeException(errorMsg);
+        if (response == null) {
+            throw new RuntimeException("No response from CoAP server");
+        }
+        if (!response.isSuccess()) {
+            System.err.println("Failed response: " + response.getCode());
+            throw new RuntimeException("Error sending data to the CoAP server: " + response.getCode());
         }
     }
 

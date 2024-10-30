@@ -50,9 +50,9 @@ public class ProtocolReceiverMqqt implements ProtocolReceiver {
                 @Override
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
                     String messageReceiver = new String(message.getPayload());
-                    processMessage(messageReceiver);
-//                    System.out.println("Mensaje recibido del tema '" + topic
-//                            + "': " + messageProcess.messageFormat(messageReceiver));
+                    MessageFormat format = processMessage(messageReceiver);
+                    System.out.println("Mensaje recibido del tema '" + topic
+                            + "': " + format);
 
                 }
 
@@ -92,9 +92,10 @@ public class ProtocolReceiverMqqt implements ProtocolReceiver {
         }
     }
 
-    private void processMessage(String message) {
+    private MessageFormat processMessage(String message) {
         MessageFormat proccesMessage = MessageProcess.messageFormat(message);
         gateway.processMessage(proccesMessage);
+        return proccesMessage;
     }
 
 }

@@ -18,8 +18,8 @@ import javax.swing.table.DefaultTableModel;
 public final class Principal extends javax.swing.JFrame {
 
     private List<Gateway> gateways;
-    private GatewayDAO gatewayDAO = GatewayDAOImpl.getInstance();
-    private List<Monitor> monitors = new ArrayList<>();
+    private final GatewayDAO gatewayDAO = GatewayDAOImpl.getInstance();
+    private final List<Monitor> monitors = new ArrayList<>();
 
     /**
      * Creates new form Principal
@@ -54,9 +54,6 @@ public final class Principal extends javax.swing.JFrame {
                 Boolean activo = (Boolean) tblGateway.getValueAt(row, column);
                 String serie = (String) tblGateway.getValueAt(row, 0);
                 Gateway gateway = findGateway(serie);
-                gateway.setStatus(activo);
-                gatewayDAO.updateGateway(gateway);
-                cargarDatosTabla();
 
                 Monitor monitor = validarMonitor(gateway);
 
@@ -107,7 +104,7 @@ public final class Principal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(42, 50, 60));
@@ -226,7 +223,20 @@ public final class Principal extends javax.swing.JFrame {
         eliminarGateway.setVisible(true);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void cerrarGateways() {
+        for (Gateway gateway : gateways) {
+            gateway.finishGateway();
+            gatewayDAO.updateGateway(gateway);
+        }
+    }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        cerrarGateways();
+        System.exit(0);
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton jButton1;

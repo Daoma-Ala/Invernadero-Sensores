@@ -19,15 +19,14 @@ public class FactoryProtocol {
 
     public static ProtocolReceiver createProtocolReceiverCoap(String serie,
             IGateway gateway) {
-        String coapServerUri = "coap://localhost:5683/" + serie;
-        return new ProtocolReceiverCoap(coapServerUri, gateway);
+        return new ProtocolReceiverCoap(serie, gateway);
     }
 
     public static ProtocolReceiver createProtocolReceiverMqqt(String serie,
             IGateway gateway) {
         String broker = "tcp://broker.emqx.io:1883";
         String topic = "sensor/" + serie;
-        String clienteId = serie;
+        String clienteId = "gateway" + serie;
         return new ProtocolReceiverMqqt(broker, clienteId, topic, gateway);
     }
 

@@ -13,22 +13,23 @@ import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 import com.mycompany.gateway_sensores.receiver.ProtocolReceiver;
+import com.mycompany.gateway_sensores.receiver.impl.protocolCoap.ServerCoap;
 
 /**
  *
  * @author daniel
  */
 public class ProtocolReceiverCoap implements ProtocolReceiver {
-
-    private final CoapServer coapServer = new CoapServer();
+    
+    private final CoapServer coapServer = ServerCoap.getInstance();
     private final String resource;
     private IGateway gateway;
-
+    
     public ProtocolReceiverCoap(String resource, IGateway gateway) {
         this.resource = resource;
         this.gateway = gateway;
     }
-
+    
     @Override
     public void subscribe() {
         coapServer.add(new CoapResource(resource) {
@@ -37,26 +38,26 @@ public class ProtocolReceiverCoap implements ProtocolReceiver {
                 String payload = exchange.getRequestText();
                 System.out.println("Mensaje recibido del sensor: " + payload);
                 processMessage(payload);
-                exchange.respond(CoAP.ResponseCode.CREATED);
+                exchange.respond(CoAP.ResponseCode.CONTENT, "Request received");
             }
         });
     }
-
+    
     @Override
     public void connect() {
-        coapServer.start();
+        ServerCoap.connect(this);
         System.out.println("Servidor CoAP encendido");
     }
-
+    
     @Override
     public void desconnect() {
-        coapServer.stop();
-        System.out.println("Servidor CoAP detenido");
+        coapServer.remove(new CoapResource(resource));
+        ServerCoap.desconnect(this);
     }
-
+    
     private void processMessage(String message) {
         MessageFormat proccesMessage = MessageProcess.messageFormat(message);
         gateway.processMessage(proccesMessage);
     }
-
+    
 }

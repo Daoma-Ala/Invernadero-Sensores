@@ -7,20 +7,15 @@ package com.mycompany.gateway_sensores.view;
 import com.mycompany.gateway_sensores.dao.impl.GatewayDAOImpl;
 import com.mycompany.gateway_sensores.gateway.impl.Gateway;
 import com.mycompany.gateway_sensores.message.MessageFormat;
+import com.mycompany.gateway_sensores.utils.oberser.Observable;
 import java.awt.Color;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import javax.swing.SwingUtilities;
 
 /**
  *
  * @author daniel
  */
-public class Monitor extends javax.swing.JFrame {
+public class Monitor extends javax.swing.JFrame implements Observable {
 
-    private final ScheduledExecutorService scheduler
-            = Executors.newSingleThreadScheduledExecutor();
     private final Gateway gateway;
     private final Principal principal;
 
@@ -34,28 +29,21 @@ public class Monitor extends javax.swing.JFrame {
         initComponents();
         this.gateway = gateway;
         this.principal = principal;
+        gateway.setStatus(true);
+        gateway.addObservable(this);
         cargarDatosPantalla();
-        iniciarActualizacionDatos();
+        validarStatus();
     }
 
     private void cargarDatosPantalla() {
         this.txtSerie.setText(gateway.getSeries());
         this.txtTiempo.setText(String.valueOf(gateway.getCaptureTime()));
-        validarStatus();
     }
 
     private void actualizarArea() {
         this.txtAreaDatos.setText("");
         for (MessageFormat mensaje : gateway.getMensajes()) {
             txtAreaDatos.append(mensaje.toString() + "\n");
-        }
-    }
-
-    private void iniciarActualizacionDatos() {
-        if (scheduler.isShutdown()) {
-            scheduler.scheduleAtFixedRate(() -> {
-                SwingUtilities.invokeLater(this::actualizarArea);
-            }, 0, 1, TimeUnit.SECONDS);
         }
     }
 
@@ -87,6 +75,7 @@ public class Monitor extends javax.swing.JFrame {
         txtAreaDatos.setEditable(false);
         txtAreaDatos.setBackground(new java.awt.Color(51, 51, 51));
         txtAreaDatos.setColumns(20);
+        txtAreaDatos.setFont(new java.awt.Font("Liberation Sans", 1, 10)); // NOI18N
         txtAreaDatos.setForeground(new java.awt.Color(51, 255, 51));
         txtAreaDatos.setRows(5);
         txtAreaDatos.setBorder(null);
@@ -194,22 +183,17 @@ public class Monitor extends javax.swing.JFrame {
         } else {
             gateway.setStatus(true);
         }
-        actualizarGateway();
         validarStatus();
+        actualizarGateway();
     }//GEN-LAST:event_btnStatusMouseClicked
 
     private void validarStatus() {
         if (gateway.isStatus()) {
             this.btnStatus.setBackground(Color.GREEN);
-            if (scheduler.isShutdown()) {
-                iniciarActualizacionDatos();
-            }
-
+            gateway.startGateway();
         } else {
             this.btnStatus.setBackground(Color.RED);
-            if (!scheduler.isShutdown()) {
-                scheduler.shutdown();
-            }
+            gateway.finishGateway();
         }
     }
 
@@ -221,10 +205,7 @@ public class Monitor extends javax.swing.JFrame {
     @Override
     public void dispose() {
         super.dispose();
-        if (scheduler != null) {
-            scheduler.shutdown();
-        }
-        gateway.setStatus(false);
+        gateway.finishGateway();
         actualizarGateway();
     }
 
@@ -232,6 +213,10 @@ public class Monitor extends javax.swing.JFrame {
         return gateway;
     }
 
+    @Override
+    public void update() {
+        actualizarArea();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnStatus;
@@ -244,4 +229,5 @@ public class Monitor extends javax.swing.JFrame {
     private javax.swing.JLabel txtSerie;
     private javax.swing.JLabel txtTiempo;
     // End of variables declaration//GEN-END:variables
+
 }
