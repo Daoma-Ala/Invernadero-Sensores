@@ -24,12 +24,12 @@ public class SensorController {
         this.facade = facade;
     }
 
-    @GetMapping("/readSensors")
+    @GetMapping("/")
     public ResponseFormat readAllSensors() {
         return facade.readAllSensores();
     }
 
-    @PostMapping("/createSensor")
+    @PostMapping("/")
     public ResponseFormat createSensor(@RequestBody SensorDto sensorDto) {
         return facade.createSensor(sensorDto);
     }
