@@ -1,0 +1,1 @@
+{"serie":"asd","timeInterval":1,"status":true,"protocol":{"type":"coap","coapServerUri":"coap://localhost:5683/gateway_1"},"data":[{"type":"humidity","value":86.680595,"humidityUnit":"PENCENT"},{"type":"temperature","value":26.890947,"temperatureUnit":"FAHRENHEIT"}],"captureData":"30-10-2024 11:47:24"}
