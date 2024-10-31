@@ -4,7 +4,7 @@
  */
 package com.mycompany.gateway_sensores.gateway;
 
-import com.mycompany.gateway_sensores.message.MessageFormat;
+import com.mycompany.utilities.formatoGateway.MessageFormat;
 
 /**
  *

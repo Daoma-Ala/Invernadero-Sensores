@@ -10,6 +10,7 @@ import java.util.List;
  *
  * @author Daniel
  */
+@lombok.Data
 public class MessageFormat {
 
     private String serie;
@@ -18,59 +19,11 @@ public class MessageFormat {
     private int interval;
     private String gateway;
 
-    public MessageFormat() {
-    }
-
     public MessageFormat(String serie, String date, List<Data> data, int interval) {
         this.serie = serie;
         this.date = date;
         this.data = data;
         this.interval = interval;
-    }
-
-    public int getInterval() {
-        return interval;
-    }
-
-    public void setInterval(int interval) {
-        this.interval = interval;
-    }
-
-    public String getSerie() {
-        return serie;
-    }
-
-    public void setSerie(String serie) {
-        this.serie = serie;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public List<Data> getData() {
-        return data;
-    }
-
-    public String getGateway() {
-        return gateway;
-    }
-
-    public void setGateway(String gateway) {
-        this.gateway = gateway;
-    }
-
-    public void setData(List<Data> data) {
-        this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "MessageFormat{" + "serie=" + serie + ", date=" + date + ", data=" + data + ", interval=" + interval + ", gateway=" + gateway + '}';
     }
 
 }

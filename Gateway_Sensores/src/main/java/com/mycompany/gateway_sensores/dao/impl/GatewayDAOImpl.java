@@ -7,7 +7,7 @@ package com.mycompany.gateway_sensores.dao.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.gateway_sensores.dao.GatewayDAO;
 import com.mycompany.gateway_sensores.gateway.impl.Gateway;
-import com.mycompany.gateway_sensores.utils.GatewayDto;
+import com.mycompany.gateway_sensores.dto.GatewayDto;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

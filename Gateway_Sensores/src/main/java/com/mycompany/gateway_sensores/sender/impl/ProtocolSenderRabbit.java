@@ -19,11 +19,11 @@ public class ProtocolSenderRabbit implements ProtocolSender {
     private static final String HOST = "localhost";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "1234";
-    private final String exchange;
+    private static final String exchange = "servidor_invernadero";
     private ConnectionFactory factory;
 
-    public ProtocolSenderRabbit(String exchange) {
-        this.exchange = exchange;
+    public ProtocolSenderRabbit() {
+
     }
 
     @Override

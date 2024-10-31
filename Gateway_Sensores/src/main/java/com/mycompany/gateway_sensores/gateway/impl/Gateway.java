@@ -5,11 +5,11 @@
 package com.mycompany.gateway_sensores.gateway.impl;
 
 import com.mycompany.gateway_sensores.gateway.IGateway;
-import com.mycompany.gateway_sensores.helpers.FactoryProtocol;
+import com.mycompany.gateway_sensores.receiver.factory.FactoryProtocol;
 import com.mycompany.gateway_sensores.helpers.MessageProcess;
 import com.mycompany.gateway_sensores.receiver.ProtocolReceiver;
 import com.mycompany.gateway_sensores.sender.ProtocolSender;
-import com.mycompany.gateway_sensores.message.MessageFormat;
+import com.mycompany.utilities.formatoGateway.MessageFormat;
 import com.mycompany.gateway_sensores.utils.oberser.Observable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +22,10 @@ import java.util.concurrent.TimeUnit;
  * @author daniel
  */
 @lombok.Data
+@lombok.EqualsAndHashCode
 public class Gateway implements IGateway {
 
     private String series;
-    private String exchange;
     private boolean status;
     private final List<ProtocolReceiver> sensors = new ArrayList<>();
     private ProtocolSender server;
@@ -37,22 +37,21 @@ public class Gateway implements IGateway {
     public Gateway() {
     }
 
-    public Gateway(String series, int captureTime, String exchange) {
+    public Gateway(String series, int captureTime) {
         this.series = series;
-        this.exchange = exchange;
         this.captureTime = captureTime;
         setProtocolsReceiver(series);
-        setProtocolSender(exchange);
+        setProtocolSender();
     }
 
     private void setProtocolsReceiver(String series) {
         sensors.add(FactoryProtocol.createProtocolReceiverCoap(series, this));
         sensors.add(FactoryProtocol.createProtocolReceiverMqqt(series, this));
-        server = FactoryProtocol.createProtocolSenderRabbit(series);
+
     }
 
-    private void setProtocolSender(String exchange) {
-        server = FactoryProtocol.createProtocolSenderRabbit(exchange);
+    private void setProtocolSender() {
+        server = FactoryProtocol.createProtocolSenderRabbit();
     }
 
     private void startSensors() {

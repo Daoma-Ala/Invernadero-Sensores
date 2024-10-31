@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class Principal extends javax.swing.JFrame {
 
-    private List<Gateway> gateways;
+    // private List<Gateway> gateways;
     private final GatewayDAO gatewayDAO = GatewayDAOImpl.getInstance();
     private final List<Monitor> monitors = new ArrayList<>();
 
@@ -31,7 +31,7 @@ public final class Principal extends javax.swing.JFrame {
     }
 
     protected void cargarDatosTabla() {
-        gateways = gatewayDAO.readAllGateways();
+        List<Gateway> gateways = gatewayDAO.readAllGateways();
         DefaultTableModel model = (DefaultTableModel) tblGateway.getModel();
         model.setRowCount(0);
         for (Gateway gateway : gateways) {
@@ -53,41 +53,44 @@ public final class Principal extends javax.swing.JFrame {
             if (column == 1) {
                 Boolean activo = (Boolean) tblGateway.getValueAt(row, column);
                 String serie = (String) tblGateway.getValueAt(row, 0);
-                Gateway gateway = findGateway(serie);
+                // Gateway gateway = findGateway(serie);
+                Gateway gateway = GatewayDAOImpl.getInstance().readGateway(serie);
 
-                Monitor monitor = validarMonitor(gateway);
-
-                if (activo && monitor == null) {
-                    monitor = new Monitor(gateway, this);
-                    monitors.add(monitor);
-                    monitor.setVisible(true);
-                } else if (!activo && monitor != null) {
-                    monitor.dispose();
-                    monitors.remove(monitor);
+                if (gateway != null) {
+                    Monitor monitor = validarMonitor(gateway);
+                    if (activo && monitor == null) {
+                        monitor = new Monitor(gateway, this);
+                        monitors.add(monitor);
+                        monitor.setVisible(true);
+                    } else if (!activo && monitor != null) {
+                        monitor.dispose();
+                        monitors.remove(monitor);
+                    } else if (activo && monitor != null) {
+                        monitor.validarMonitor();
+                    }
                 }
             }
-        });
 
+        });
     }
 
     private Monitor validarMonitor(Gateway gateway) {
         for (Monitor monitor : monitors) {
-            if (monitor.getGateway().equals(gateway)) {
-                return new Monitor(gateway, this);
+            if (monitor.getGateway().getSeries().equals(gateway.getSeries())) {
+                return monitor;
             }
         }
         return null;
     }
 
-    private Gateway findGateway(String serie) {
-        for (Gateway gateway : gateways) {
-            if (gateway.getSeries().equals(serie)) {
-                return gateway;
-            }
-        }
-        return null;
-    }
-
+//    private Gateway findGateway(String serie) {
+//        for (Gateway gateway : gateways) {
+//            if (gateway.getSeries().equals(serie)) {
+//                return gateway;
+//            }
+//        }
+//        return null;
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,7 +104,7 @@ public final class Principal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblGateway = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -145,12 +148,12 @@ public final class Principal extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Gateway IoT");
 
-        jButton1.setBackground(new java.awt.Color(93, 162, 113));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Registrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrar.setBackground(new java.awt.Color(93, 162, 113));
+        btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRegistrarActionPerformed(evt);
             }
         });
 
@@ -179,7 +182,7 @@ public final class Principal extends javax.swing.JFrame {
                         .addGap(125, 125, 125)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))))
+                            .addComponent(btnRegistrar))))
                 .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -190,7 +193,7 @@ public final class Principal extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnRegistrar)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminar)
                 .addContainerGap(17, Short.MAX_VALUE))
@@ -211,11 +214,11 @@ public final class Principal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         RegistrarGateway registrarGateway = new RegistrarGateway(this);
         registrarGateway.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
@@ -224,9 +227,9 @@ public final class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void cerrarGateways() {
-        for (Gateway gateway : gateways) {
-            gateway.finishGateway();
-            gatewayDAO.updateGateway(gateway);
+        for (Monitor monitor : monitors) {
+            monitor.gateway.finishGateway();
+            gatewayDAO.updateGateway(monitor.gateway);
         }
     }
 
@@ -239,7 +242,7 @@ public final class Principal extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;

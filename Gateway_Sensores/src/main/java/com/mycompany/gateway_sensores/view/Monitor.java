@@ -6,7 +6,7 @@ package com.mycompany.gateway_sensores.view;
 
 import com.mycompany.gateway_sensores.dao.impl.GatewayDAOImpl;
 import com.mycompany.gateway_sensores.gateway.impl.Gateway;
-import com.mycompany.gateway_sensores.message.MessageFormat;
+import com.mycompany.utilities.formatoGateway.MessageFormat;
 import com.mycompany.gateway_sensores.utils.oberser.Observable;
 import java.awt.Color;
 
@@ -16,8 +16,9 @@ import java.awt.Color;
  */
 public class Monitor extends javax.swing.JFrame implements Observable {
 
-    private final Gateway gateway;
+    protected final Gateway gateway;
     private final Principal principal;
+    private boolean status = true;
 
     /**
      * Creates new form Monitor
@@ -29,7 +30,6 @@ public class Monitor extends javax.swing.JFrame implements Observable {
         initComponents();
         this.gateway = gateway;
         this.principal = principal;
-        gateway.setStatus(true);
         gateway.addObservable(this);
         cargarDatosPantalla();
         validarStatus();
@@ -178,17 +178,21 @@ public class Monitor extends javax.swing.JFrame implements Observable {
 
     private void btnStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStatusMouseClicked
         // TODO add your handling code here:
-        if (gateway.isStatus()) {
-            gateway.setStatus(false);
+        validarMonitor();
+    }//GEN-LAST:event_btnStatusMouseClicked
+
+    protected void validarMonitor() {
+        if (status) {
+            status = false;
         } else {
-            gateway.setStatus(true);
+            status = true;
         }
         validarStatus();
         actualizarGateway();
-    }//GEN-LAST:event_btnStatusMouseClicked
+    }
 
     private void validarStatus() {
-        if (gateway.isStatus()) {
+        if (status) {
             this.btnStatus.setBackground(Color.GREEN);
             gateway.startGateway();
         } else {
@@ -205,8 +209,11 @@ public class Monitor extends javax.swing.JFrame implements Observable {
     @Override
     public void dispose() {
         super.dispose();
-        gateway.finishGateway();
-        actualizarGateway();
+        if (status) {
+            gateway.finishGateway();
+            actualizarGateway();
+        }
+
     }
 
     public Gateway getGateway() {

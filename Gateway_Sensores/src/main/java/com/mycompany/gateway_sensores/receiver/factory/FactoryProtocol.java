@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.gateway_sensores.helpers;
+package com.mycompany.gateway_sensores.receiver.factory;
 
 import com.mycompany.gateway_sensores.gateway.IGateway;
 import com.mycompany.gateway_sensores.receiver.ProtocolReceiver;
@@ -31,7 +31,7 @@ public class FactoryProtocol {
         return new ProtocolReceiverMqqt(broker, clienteId, topic, gateway);
     }
 
-    public static ProtocolSender createProtocolSenderRabbit(String exchange) {
-        return new ProtocolSenderRabbit(exchange);
+    public static ProtocolSender createProtocolSenderRabbit() {
+        return new ProtocolSenderRabbit();
     }
 }

@@ -30,7 +30,6 @@ public final class PantallaSensores extends javax.swing.JFrame {
     private RegistroSensorView registroSensorView;
     private List<Sensor> sensores;
     private final List<Sensor> sensoresActivos = new ArrayList<>();
-    
 
     public PantallaSensores() {
         initComponents();
@@ -361,6 +360,8 @@ public final class PantallaSensores extends javax.swing.JFrame {
 
     private void mostrarDialogoEmergente(int filaSeleccionada) {
         Object[] opciones = {"Eliminar", "Actualizar", "Cancelar"};
+
+        String serie = tblSensores.getValueAt(filaSeleccionada, 0).toString();
         int seleccion = JOptionPane.showOptionDialog(
                 this,
                 "¿Qué acción deseas realizar en la fila seleccionada?",
@@ -371,13 +372,23 @@ public final class PantallaSensores extends javax.swing.JFrame {
                 opciones,
                 opciones[2]);
 
-        // Acción basada en la selección del usuario
         if (seleccion == JOptionPane.YES_OPTION) {
-            // Eliminar la fila
-            // eliminarFila(filaSeleccionada);
+            eliminarSensor(serie);
         } else if (seleccion == JOptionPane.NO_OPTION) {
-            // Actualizar la fila
-            // actualizarFila(filaSeleccionada);
+
+        }
+
+    }
+
+    private void eliminarSensor(String serie) {
+        try {
+            sensorFacade.deleteSensor(serie);
+            cargarDatosTabla();
+
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error al guardar el sensor", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
