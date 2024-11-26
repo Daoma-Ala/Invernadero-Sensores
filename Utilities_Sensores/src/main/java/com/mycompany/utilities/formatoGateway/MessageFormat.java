@@ -11,6 +11,9 @@ import java.util.List;
  * @author Daniel
  */
 @lombok.Data
+@lombok.Builder
+@lombok.AllArgsConstructor
+@lombok.NoArgsConstructor
 public class MessageFormat {
 
     private String serie;

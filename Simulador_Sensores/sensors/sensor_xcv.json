@@ -1,1 +1,1 @@
-{"serie":"xcv","timeInterval":3,"status":false,"protocol":{"type":"coap","coapServerUri":"coap://localhost:5683/gateway_2"},"data":[{"type":"humidity","value":61.47174,"humidityUnit":"PENCENT"}],"captureData":"30-10-2024 12:33:20"}
+{"serie":"xcv","timeInterval":3,"status":false,"protocol":{"type":"coap","coapServerUri":"coap://localhost:5683/gateway_2"},"data":[{"type":"humidity","value":36.983196,"humidityUnit":"PENCENT"}],"captureData":"31-10-2024 20:02:16"}

@@ -2,20 +2,8 @@ version: '3'
 
 volumes:
   sensor_mysql_data:
-  alarma_mysql_data:
-  invernadero_mysql_data:
 
 services:
-  mosquitto:
-    image: eclipse-mosquitto:2.0.18
-    ports:
-      - "1884:1883"
-      - "9002:9001"
-    volumes:
-      - ./mosquitto/data:/mosquitto/data
-      - ./mosquitto/log:/mosquitto/log
-    restart: always
-
   rabbitmq:
     image: "rabbitmq:latest"
     container_name: rabbitmq-container
