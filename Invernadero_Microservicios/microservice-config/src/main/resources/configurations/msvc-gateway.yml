@@ -1,0 +1,20 @@
+eureka:
+  client:
+    register-with-eureka: false
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: msvc-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: sensors
+          uri: lb://MSVC-SENSORS
+          predicates:
+            - Path=/api/sensor/**
