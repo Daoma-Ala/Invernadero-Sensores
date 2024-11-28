@@ -5,79 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c0b3961-e89c-498b-9c4f-d772d4159fa8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/microservice-config/src/main/resources/banner.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-config/src/main/resources/configurations/msvc-sensors.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-eureka/src/main/resources/banner.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/resources/banner.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/config/RabbitMQConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/controller/SensorController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/entity/Muestra.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/entity/Sensor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/mapper/MuestraMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/mapper/SensorMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/queue/RabbitMQMessageListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/queue/RabbitMQMessageSend.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/repository/MuestraRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/repository/SensorRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/router/ActionRouter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/router/ActionRouterGateway.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/service/Facade.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/service/MuestraService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/service/SensorService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/service/imp/FacadeImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/service/imp/MuestraServiceImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/java/com/microservice/sensors/service/imp/SensorServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-sensors/src/main/resources/banner.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/AdministradorSensoresApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/config/RabbitMQConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/controller/SensorController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/entity/Muestra.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/entity/Sensor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/facade/IFacade.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/facade/impl/Facade.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/mapper/MuestraMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/mapper/SensorMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/rabbit_client/RabbitMQMessageListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/rabbit_client/RabbitMQMessageSend.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/repository/MuestraRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/repository/SensorRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/router/ActionRouter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/router/ActionRouterGateway.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/service/MuestraService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/service/SensorService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/service/impl/MuestraServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/java/com/example/Administrador_Sensores/service/impl/SensorServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Administrador_Sensores/src/test/java/com/example/Administrador_Sensores/AdministradorSensoresApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Config/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/sonarlint/issuestore/0/d/0d54a1237616a151e3e1759d5d7a06c9a55368b3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/sonarlint/issuestore/d/2/d2e9ed1fa1a304192dd70752a0ad0dddf28df9ad" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/sonarlint/issuestore/index.pb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/sonarlint/securityhotspotstore/0/d/0d54a1237616a151e3e1759d5d7a06c9a55368b3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/sonarlint/securityhotspotstore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/sonarlint/securityhotspotstore/d/2/d2e9ed1fa1a304192dd70752a0ad0dddf28df9ad" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.mvn/jvm.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/.mvn/maven.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServices-Invernadero/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Simulador_Sensores/sensors/sensor_asd.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Simulador_Sensores/sensors/sensor_asd.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Simulador_Sensores/sensors/sensor_asdasd.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Simulador_Sensores/sensors/sensor_asdasd.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Simulador_Sensores/sensors/sensor_xcv.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Simulador_Sensores/sensors/sensor_xcv.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Simulador_Sensores/sensors/sensor_xcvxcv.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Simulador_Sensores/sensors/sensor_xcvxcv.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/config/JwtAuthenticationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/controller/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/model/AuthenticationRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/model/AuthenticationResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/service/CustomUserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/service/JwtService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/util/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Configuracion/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../Configuracion/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-config/src/main/resources/configurations/msvc-gateway.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-config/src/main/resources/configurations/msvc-gateway.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-gateway/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,20 +50,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MicroserviceConfigApplication.executor": "Run",
-    "Application.MicroserviceEurekaApplication.executor": "Run",
-    "Application.MicroserviceGatewayApplication.executor": "Run",
-    "Application.MicroserviceSensorsApplication.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "web/sensor",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/daniel/Documentos/Proyectos/GitHub/Invernadero-Sensores/microservice-sensors"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MicroserviceConfigApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MicroserviceEurekaApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MicroserviceGatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MicroserviceSensorsApplication.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;web/sensor&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/daniel/Documentos/Proyectos/GitHub/Invernadero-Sensores/microservice-sensors&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Application.MicroserviceSensorsApplication">
+}</component>
+  <component name="RunManager" selected="Application.MicroserviceGatewayApplication">
     <configuration name="MicroserviceConfigApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.microservice.config.MicroserviceConfigApplication" />
       <module name="microservice-config" />
@@ -174,10 +118,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MicroserviceSensorsApplication" />
         <item itemvalue="Application.MicroserviceGatewayApplication" />
         <item itemvalue="Application.MicroserviceEurekaApplication" />
         <item itemvalue="Application.MicroserviceConfigApplication" />
+        <item itemvalue="Application.MicroserviceSensorsApplication" />
       </list>
     </recent_temporary>
   </component>
