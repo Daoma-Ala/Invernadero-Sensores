@@ -4,55 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c0b3961-e89c-498b-9c4f-d772d4159fa8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/microservice/auth/config/AuthorizationServerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/microservice/auth/config/JwkConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/microservice/auth/controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/microservice/auth/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/microservice/auth/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/config/GatewaySecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/b/0bd24b0cbd606c3bb8b422098b4b472feae3a51b" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/b/0bd24b0cbd606c3bb8b422098b4b472feae3a51b" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/b/1b886f283037113b5cd6e925159cd779b4f547de" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/d/2d33a6f59fd615d615c6ec76051b593d6cf595f5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/d/3d3646efccd1af1dadc57b0449312d038d5b0f71" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/5/558283d48ccde582b5fdbed4206bc0961d20df39" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/6/56495c666c9ef25cdc9cc0359ae4a7c477c83126" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/7/574d1961f1307b711681b56cf1a896be0794b516" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/e/7ecd419c4ba59afa6db7dbb353b570186ed67246" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/f/8f8debd217de49398f5645947dc8a360b71fc6d0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/8/d8361c2d66134b5375917ce52f8bf2de58d2ca11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/f/ef271e965604a95f711140b9d6c73d201f9c4efd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/1/b/1b886f283037113b5cd6e925159cd779b4f547de" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/2/d/2d33a6f59fd615d615c6ec76051b593d6cf595f5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/3/d/3d3646efccd1af1dadc57b0449312d038d5b0f71" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/5/5/558283d48ccde582b5fdbed4206bc0961d20df39" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/5/6/56495c666c9ef25cdc9cc0359ae4a7c477c83126" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/5/7/574d1961f1307b711681b56cf1a896be0794b516" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/e/7ecd419c4ba59afa6db7dbb353b570186ed67246" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/8/f/8f8debd217de49398f5645947dc8a360b71fc6d0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/8/d8361c2d66134b5375917ce52f8bf2de58d2ca11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/e/f/ef271e965604a95f711140b9d6c73d201f9c4efd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-config/src/main/resources/configurations/msvc-gateway.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-config/src/main/resources/configurations/msvc-gateway.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-config/src/main/resources/configurations/msvc-sensors.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-config/src/main/resources/configurations/msvc-sensors.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/config/JwtAuthenticationFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/config/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/controller/AuthController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/model/AuthenticationRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/model/AuthenticationResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/model/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/repository/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/service/CustomUserDetailsService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/service/JwtService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/service/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-gateway/src/main/java/com/microservice/gateway/util/JwtUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-    </list>
+    <list default="true" id="6c0b3961-e89c-498b-9c4f-d772d4159fa8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +41,7 @@
     "Application.MicroserviceSensorsApplication.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "web/sensor",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/daniel/Documentos/Proyectos/GitHub/Invernadero-Sensores/Invernadero_Microservicios",
     "project.structure.last.edited": "Modules",

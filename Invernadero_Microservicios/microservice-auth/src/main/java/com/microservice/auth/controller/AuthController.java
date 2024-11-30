@@ -41,11 +41,11 @@ public class AuthController {
         if (existingUser != null && passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
             // Generar el token JWT
             String jwt = Jwts.builder()
-                    .setSubject(existingUser.getUsername())
-                    .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + 3600 * 1000))
-                    .signWith(key)
-                    .compact();
+        .setSubject(existingUser.getUsername())
+        .setIssuedAt(new Date())
+        .setExpiration(new Date(System.currentTimeMillis() + 3600 * 1000))
+        .signWith(rsaPrivateKey, SignatureAlgorithm.RS256)  // Usar RS256 si es RSA
+        .compact();
             return jwt; // Devolver el token generado
         }
         return "Credenciales incorrectas";

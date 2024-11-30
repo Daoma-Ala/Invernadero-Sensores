@@ -12,10 +12,10 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class GatewaySecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        http.authorizeExchange()
-                .pathMatchers("/api/login", "/api/register").permitAll()
-                .anyExchange().authenticated()
-                .and().oauth2ResourceServer().jwt();
+       http.authorizeExchange()
+                .pathMatchers("/api/login", "/api/register").permitAll()  
+                .anyExchange().authenticated() 
+                .and().oauth2ResourceServer().jwt();  
         return http.build();
     }
 
