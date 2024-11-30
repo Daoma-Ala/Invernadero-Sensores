@@ -1,6 +1,4 @@
-eureka:
-  client:
-    register-with-eureka: false
+
 
 server:
   port: 8080
@@ -11,16 +9,12 @@ spring:
     allow-bean-definition-overriding: true
   application:
     name: msvc-gateway
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3308/usuario_db
-    username: root
-    password: 1234
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database_platform: org.hibernate.dialect.MySQL8Dialect
-    database: mysql
+  eureka:
+    instance:
+      hostname: localhost
+    client:
+      service-url:
+        defaultZone: http://localhost:8761/eureka
   cloud:
     gateway:
       discovery:
@@ -28,11 +22,12 @@ spring:
           enabled: true
       routes:
         - id: sensors
-          uri: lb://MSVC-SENSORS
+          uri: http://localhost:8083
           predicates:
             - Path=/api/sensor/**
-      default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
-jwt:
-  secret: llaveSecreta
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000
 

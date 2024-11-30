@@ -23,6 +23,11 @@ spring:
     deserialization:
       trust:
         all: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000
 
 eureka:
   instance:
@@ -53,5 +58,7 @@ rabbitmq:
       name: queue-servicio-alarma
     routing:
       key: servicio-alarma
+
+
 
 

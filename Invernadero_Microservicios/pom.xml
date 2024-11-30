@@ -21,6 +21,7 @@
         <module>microservice-eureka</module>
         <module>microservice-config</module>
         <module>microservice-sensors</module>
+        <module>microservice-auth</module>
     </modules>
 
     <properties>
