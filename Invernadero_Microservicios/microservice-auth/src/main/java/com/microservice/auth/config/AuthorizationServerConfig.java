@@ -14,9 +14,13 @@ import org.springframework.security.web.SecurityFilterChain;
 //@EnableAuthorizationServer
 public class AuthorizationServerConfig {
 
+ 
     @Bean
-    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // Aplicar la configuración predeterminada para OAuth2 Authorization Server
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+
+        // Desactivar el login por formulario
         return http.formLogin().disable().build();
     }
 
@@ -39,5 +43,11 @@ public class AuthorizationServerConfig {
                 .build();
 
         return new InMemoryRegisteredClientRepository(registeredClient);
+    }
+    
+    // Configuración adicional para exponer el JWKS endpoint
+    @Bean
+    public OAuth2AuthorizationServerConfigurer<HttpSecurity> oauth2AuthorizationServerConfigurer() {
+        return new OAuth2AuthorizationServerConfigurer<>();
     }
 }
